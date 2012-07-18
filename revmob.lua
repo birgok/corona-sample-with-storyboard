@@ -1,21 +1,21 @@
 package.preload['json']=(function(...)local e=string
-local d=math
-local u=table
-local l=error
-local s=tonumber
-local c=tostring
+local c=math
+local s=table
+local i=error
+local d=tonumber
+local u=tostring
 local a=type
 local o=setmetatable
 local r=pairs
 local f=ipairs
-local i=assert
+local l=assert
 local n=Chipmunk
 module("json")local n={buffer={}}function n:New()local e={}o(e,self)self.__index=self
 e.buffer={}return e
 end
 function n:Append(e)self.buffer[#self.buffer+1]=e
 end
-function n:ToString()return u.concat(self.buffer)end
+function n:ToString()return s.concat(self.buffer)end
 local t={backslashes={['\b']="\\b",['\t']="\\t",['\n']="\\n",['\f']="\\f",['\r']="\\r",['"']='\\"',['\\']="\\\\",['/']="\\/"}}function t:New()local e={}e.writer=n:New()o(e,self)self.__index=self
 return e
 end
@@ -32,37 +32,37 @@ self:WriteError(n)elseif e=="userdata"then
 self:WriteError(n)end
 end
 function t:WriteNil()self:Append("null")end
-function t:WriteString(e)self:Append(c(e))end
+function t:WriteString(e)self:Append(u(e))end
 function t:ParseString(n)self:Append('"')self:Append(e.gsub(n,'[%z%c\\"/]',function(t)local n=self.backslashes[t]if n then return n end
 return e.format("\\u%.4X",e.byte(t))end))self:Append('"')end
 function t:IsArray(t)local n=0
-local l=function(e)if a(e)=="number"and e>0 then
-if d.floor(e)==e then
+local i=function(e)if a(e)=="number"and e>0 then
+if c.floor(e)==e then
 return true
 end
 end
 return false
 end
 for e,t in r(t)do
-if not l(e)then
+if not i(e)then
 return false,'{','}'else
-n=d.max(n,e)end
+n=c.max(n,e)end
 end
 return true,'[',']',n
 end
-function t:WriteTable(e)local i,n,l,t=self:IsArray(e)self:Append(n)if i then
-for n=1,t do
-self:Write(e[n])if n<t then
+function t:WriteTable(e)local i,t,l,n=self:IsArray(e)self:Append(t)if i then
+for t=1,n do
+self:Write(e[t])if t<n then
 self:Append(',')end
 end
 else
-local n=true;for t,e in r(e)do
+local n=true;for e,t in r(e)do
 if not n then
 self:Append(',')end
-n=false;self:ParseString(t)self:Append(':')self:Write(e)end
+n=false;self:ParseString(e)self:Append(':')self:Write(t)end
 end
 self:Append(l)end
-function t:WriteError(n)l(e.format("Encoding of %s unsupported",c(n)))end
+function t:WriteError(n)i(e.format("Encoding of %s unsupported",u(n)))end
 function t:WriteFunction(e)if e==Null then
 self:WriteNil()else
 self:WriteError(e)end
@@ -86,7 +86,7 @@ end
 local n={escapes={['t']='\t',['n']='\n',['f']='\f',['r']='\r',['b']='\b',}}function n:New(n)local e={}e.reader=r:New(n)o(e,self)self.__index=self
 return e;end
 function n:Read()self:SkipWhiteSpace()local n=self:Peek()if n==nil then
-l(e.format("Nil string: '%s'",self:All()))elseif n=='{'then
+i(e.format("Nil string: '%s'",self:All()))elseif n=='{'then
 return self:ReadObject()elseif n=='['then
 return self:ReadArray()elseif n=='"'then
 return self:ReadString()elseif e.find(n,"[%+%-%d]")then
@@ -95,7 +95,7 @@ return self:ReadTrue()elseif n=='f'then
 return self:ReadFalse()elseif n=='n'then
 return self:ReadNull()elseif n=='/'then
 self:ReadComment()return self:Read()else
-l(e.format("Invalid input: '%s'",self:All()))end
+i(e.format("Invalid input: '%s'",self:All()))end
 end
 function n:ReadTrue()self:TestReservedWord{'t','r','u','e'}return true
 end
@@ -103,31 +103,31 @@ function n:ReadFalse()self:TestReservedWord{'f','a','l','s','e'}return false
 end
 function n:ReadNull()self:TestReservedWord{'n','u','l','l'}return nil
 end
-function n:TestReservedWord(n)for i,t in f(n)do
+function n:TestReservedWord(n)for l,t in f(n)do
 if self:Next()~=t then
-l(e.format("Error reading '%s': %s",u.concat(n),self:All()))end
+i(e.format("Error reading '%s': %s",s.concat(n),self:All()))end
 end
 end
 function n:ReadNumber()local n=self:Next()local t=self:Peek()while t~=nil and e.find(t,"[%+%-%d%.eE]")do
 n=n..self:Next()t=self:Peek()end
-n=s(n)if n==nil then
-l(e.format("Invalid number: '%s'",n))else
+n=d(n)if n==nil then
+i(e.format("Invalid number: '%s'",n))else
 return n
 end
 end
-function n:ReadString()local n=""i(self:Next()=='"')while self:Peek()~='"'do
+function n:ReadString()local n=""l(self:Next()=='"')while self:Peek()~='"'do
 local e=self:Next()if e=='\\'then
 e=self:Next()if self.escapes[e]then
 e=self.escapes[e]end
 end
 n=n..e
 end
-i(self:Next()=='"')local t=function(n)return e.char(s(n,16))end
+l(self:Next()=='"')local t=function(n)return e.char(d(n,16))end
 return e.gsub(n,"u%x%x(%x%x)",t)end
-function n:ReadComment()i(self:Next()=='/')local n=self:Next()if n=='/'then
+function n:ReadComment()l(self:Next()=='/')local n=self:Next()if n=='/'then
 self:ReadSingleLineComment()elseif n=='*'then
 self:ReadBlockComment()else
-l(e.format("Invalid comment: %s",self:All()))end
+i(e.format("Invalid comment: %s",self:All()))end
 end
 function n:ReadBlockComment()local n=false
 while not n do
@@ -137,46 +137,46 @@ end
 if not n and
 t=='/'and
 self:Peek()=="*"then
-l(e.format("Invalid comment: %s, '/*' illegal.",self:All()))end
+i(e.format("Invalid comment: %s, '/*' illegal.",self:All()))end
 end
 self:Next()end
 function n:ReadSingleLineComment()local e=self:Next()while e~='\r'and e~='\n'do
 e=self:Next()end
 end
-function n:ReadArray()local t={}i(self:Next()=='[')local n=false
+function n:ReadArray()local t={}l(self:Next()=='[')local n=false
 if self:Peek()==']'then
 n=true;end
 while not n do
-local i=self:Read()t[#t+1]=i
+local l=self:Read()t[#t+1]=l
 self:SkipWhiteSpace()if self:Peek()==']'then
 n=true
 end
 if not n then
 local n=self:Next()if n~=','then
-l(e.format("Invalid array: '%s' due to: '%s'",self:All(),n))end
+i(e.format("Invalid array: '%s' due to: '%s'",self:All(),n))end
 end
 end
-i(']'==self:Next())return t
+l(']'==self:Next())return t
 end
-function n:ReadObject()local r={}i(self:Next()=='{')local t=false
+function n:ReadObject()local r={}l(self:Next()=='{')local t=false
 if self:Peek()=='}'then
 t=true
 end
 while not t do
-local i=self:Read()if a(i)~="string"then
-l(e.format("Invalid non-string object key: %s",i))end
+local l=self:Read()if a(l)~="string"then
+i(e.format("Invalid non-string object key: %s",l))end
 self:SkipWhiteSpace()local n=self:Next()if n~=':'then
-l(e.format("Invalid object: '%s' due to: '%s'",self:All(),n))end
-self:SkipWhiteSpace()local o=self:Read()r[i]=o
+i(e.format("Invalid object: '%s' due to: '%s'",self:All(),n))end
+self:SkipWhiteSpace()local o=self:Read()r[l]=o
 self:SkipWhiteSpace()if self:Peek()=='}'then
 t=true
 end
 if not t then
 n=self:Next()if n~=','then
-l(e.format("Invalid array: '%s' near: '%s'",self:All(),n))end
+i(e.format("Invalid array: '%s' near: '%s'",self:All(),n))end
 end
 end
-i(self:Next()=="}")return r
+l(self:Next()=="}")return r
 end
 function n:SkipWhiteSpace()local n=self:Peek()while n~=nil and e.find(n,"[%s/]")do
 if n=='/'then
@@ -208,11 +208,11 @@ end,getModel=function(e)local e=e:getManufacturer()if(e=="Apple")then
 return system.getInfo("architectureInfo")end
 return system.getInfo("model")end}Client={payload={},adunit=nil,applicationId=nil,hostname=t,device=nil,new=function(e,n,t)local n={adunit=n,applicationId=t,device=Device:new()}setmetatable(n,e)e.__index=e
 return n
-end,url=function(e)return l.."/api/v4/mobile_apps/"..e.applicationId.."/"..e.adunit.."/fetch.json"end,payloadAsJsonString=function(e)return i.encode({device=e.device})end,post=function(r,e,t)if(e==nil)then
+end,url=function(e)return l.."/api/v4/mobile_apps/"..e.applicationId.."/"..e.adunit.."/fetch.json"end,payloadAsJsonString=function(e)return i.encode({device=e.device})end,post=function(r,e,n)if(e==nil)then
 return
 end
-local i=require('socket.http')local l=require("ltn12")local n={}local i,l,e=i.request{method="POST",url=r,source=l.source.string(e),headers={["Content-Length"]=tostring(#e),["Content-Type"]="application/json"},sink=l.sink.table(n),}local e={statusCode=l,response=n[1],headers=e}if t then
-t(e)end
+local l=require('socket.http')local t=require("ltn12")local i={}local l,t,e=l.request{method="POST",url=r,source=t.source.string(e),headers={["Content-Length"]=tostring(#e),["Content-Type"]="application/json"},sink=t.sink.table(i),}local e={statusCode=t,response=i[1],headers=e}if n then
+n(e)end
 return e
 end,fetch=function(e,n)local t=coroutine.create(Client.post)coroutine.resume(t,e:url(),e:payloadAsJsonString(),n)end}end)package.preload['revmob_utils']=(function(...)function log(e)print("[RevMob] "..tostring(e))io.output():flush()end
 getLink=function(n,e)for t,e in ipairs(e)do
@@ -264,14 +264,14 @@ e.image:toFront()else
 e:release()end
 end
 end
-local l=function(n)if e.image~=nil then
+local i=function(n)if e.image~=nil then
 e:release()end
 e.image=n.target
 e:show()end
 local n=function(n)local t,n=pcall(t.decode,n.response)if(not t or n==nil)then
 log("Ad not received.")e.notifyAdListener({type="adFailed"})return
 end
-local n=n['banners'][1]['links']e.clickUrl=getLink('clicks',n)e.imageUrl=getLink('image',n)timer.performWithDelay(e.DELAYED_LOAD_IMAGE,function()display.loadRemoteImage(e.imageUrl,"GET",l,e.TMP_IMAGE_NAME,system.TemporaryDirectory)log("Ad received")e.notifyAdListener({type="adReceived"})end)end
+local n=n['banners'][1]['links']e.clickUrl=getLink('clicks',n)e.imageUrl=getLink('image',n)timer.performWithDelay(e.DELAYED_LOAD_IMAGE,function()display.loadRemoteImage(e.imageUrl,"GET",i,e.TMP_IMAGE_NAME,system.TemporaryDirectory)log("Ad received")e.notifyAdListener({type="adReceived"})end)end
 local t=Client:new("banners",e.applicationId)t:fetch(n)return e
 end,notifyAdListener=function(e)if self.adListener then
 self.adListener(e)end
@@ -291,8 +291,12 @@ e.image.height=e.height or e.HEIGHT
 end
 end,}end)package.preload['adlink']=(function(...)local e=require('json')require('revmob_client')require('revmob_utils')AdLink={open=function(e)local e=Client:new("links",e)local e=e.post(e:url(),e:payloadAsJsonString(),nil)log("Status code: "..e.statusCode)if(e.statusCode==302)then
 system.openURL(e.headers['location'])end
-end,}end)package.preload['popup']=(function(...)local n=require('json')require('revmob_client')Popup={DELAYED_LOAD_IMAGE=10,YES_BUTTON_POSITION=2,message=nil,click_url=nil,show=function(e)client=Client:new("pop_ups",e)client:fetch(Popup.networkListener)end,networkListener=function(e)local n,e=pcall(n.decode,e.response)if Popup.isParseOk(n,e)then
-Popup.message=e["pop_up"]["message"]Popup.click_url=e["pop_up"]["links"][1]["href"]timer.performWithDelay(Popup.DELAYED_LOAD_IMAGE,function()local e=native.showAlert(Popup.message,"",{"No, thanks.","Yes, Sure!"},Popup.click)end)end
+end,}end)package.preload['popup']=(function(...)local n=require('json')require('revmob_client')Popup={DELAYED_LOAD_IMAGE=10,YES_BUTTON_POSITION=2,message=nil,click_url=nil,adListener=nil,notifyAdListener=function(e)if Popup.adListener then
+Popup.adListener(e)end
+end,show=function(e,n)Popup.adListener=n
+client=Client:new("pop_ups",e)client:fetch(Popup.networkListener)end,networkListener=function(e)local n,e=pcall(n.decode,e.response)if Popup.isParseOk(n,e)then
+Popup.message=e["pop_up"]["message"]Popup.click_url=e["pop_up"]["links"][1]["href"]timer.performWithDelay(Popup.DELAYED_LOAD_IMAGE,function()local e=native.showAlert(Popup.message,"",{"No, thanks.","Yes, Sure!"},Popup.click)end)Popup.notifyAdListener({type="adReceived"})else
+Popup.notifyAdListener({type="adFailed"})end
 end,isParseOk=function(n,e)if(not n)then
 return false
 elseif(e==nil)then
@@ -311,11 +315,12 @@ end
 return true
 end,click=function(e)if"clicked"==e.action then
 if Popup.YES_BUTTON_POSITION==e.index then
-system.openURL(Popup.click_url)end
+Popup.notifyAdListener({type="adClicked"})system.openURL(Popup.click_url)else
+Popup.notifyAdListener({type="adClosed"})end
 end
-end}end)require('revmob_utils')require('fullscreen')require('banner')require('adlink')require('popup')local n='4f56aa6e3dc441000e005a20'RevMob={showPopup=function(e)if Device:isSimulator()then
-Popup.show(n)else
-applicationId=e[system.getInfo("platformName")]Popup.show(applicationId)end
+end}end)require('revmob_utils')require('fullscreen')require('banner')require('adlink')require('popup')local n='4f56aa6e3dc441000e005a20'RevMob={showPopup=function(t,e)if Device:isSimulator()then
+Popup.show(n,e)else
+applicationId=t[system.getInfo("platformName")]Popup.show(applicationId,e)end
 end,showFullscreen=function(t,e)if Device:isSimulator()then
 Fullscreen.show(n,e)else
 applicationId=t[system.getInfo("platformName")]Fullscreen.show(applicationId,e)end

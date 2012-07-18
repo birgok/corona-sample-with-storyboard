@@ -46,7 +46,7 @@ local tabButtons = {
 	{
 	  label = "Show pop up", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
-      RevMob.showPopup(params)
+      RevMob.showPopup(params, revmobListener)
       return true
 	  end
 	},
