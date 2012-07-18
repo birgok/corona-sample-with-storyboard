@@ -1,12 +1,12 @@
 package.preload['json']=(function(...)local e=string
 local d=math
-local s=table
+local u=table
 local l=error
-local c=tonumber
-local r=tostring
+local s=tonumber
+local c=tostring
 local a=type
 local o=setmetatable
-local u=pairs
+local r=pairs
 local f=ipairs
 local i=assert
 local n=Chipmunk
@@ -15,54 +15,54 @@ e.buffer={}return e
 end
 function n:Append(e)self.buffer[#self.buffer+1]=e
 end
-function n:ToString()return s.concat(self.buffer)end
+function n:ToString()return u.concat(self.buffer)end
 local t={backslashes={['\b']="\\b",['\t']="\\t",['\n']="\\n",['\f']="\\f",['\r']="\\r",['"']='\\"',['\\']="\\\\",['/']="\\/"}}function t:New()local e={}e.writer=n:New()o(e,self)self.__index=self
 return e
 end
 function t:Append(e)self.writer:Append(e)end
 function t:ToString()return self.writer:ToString()end
-function t:Write(e)local n=a(e)if n=="nil"then
-self:WriteNil()elseif n=="boolean"then
-self:WriteString(e)elseif n=="number"then
-self:WriteString(e)elseif n=="string"then
-self:ParseString(e)elseif n=="table"then
-self:WriteTable(e)elseif n=="function"then
-self:WriteFunction(e)elseif n=="thread"then
-self:WriteError(e)elseif n=="userdata"then
-self:WriteError(e)end
+function t:Write(n)local e=a(n)if e=="nil"then
+self:WriteNil()elseif e=="boolean"then
+self:WriteString(n)elseif e=="number"then
+self:WriteString(n)elseif e=="string"then
+self:ParseString(n)elseif e=="table"then
+self:WriteTable(n)elseif e=="function"then
+self:WriteFunction(n)elseif e=="thread"then
+self:WriteError(n)elseif e=="userdata"then
+self:WriteError(n)end
 end
 function t:WriteNil()self:Append("null")end
-function t:WriteString(e)self:Append(r(e))end
-function t:ParseString(n)self:Append('"')self:Append(e.gsub(n,'[%z%c\\"/]',function(n)local t=self.backslashes[n]if t then return t end
-return e.format("\\u%.4X",e.byte(n))end))self:Append('"')end
-function t:IsArray(l)local n=0
-local t=function(e)if a(e)=="number"and e>0 then
+function t:WriteString(e)self:Append(c(e))end
+function t:ParseString(n)self:Append('"')self:Append(e.gsub(n,'[%z%c\\"/]',function(t)local n=self.backslashes[t]if n then return n end
+return e.format("\\u%.4X",e.byte(t))end))self:Append('"')end
+function t:IsArray(t)local n=0
+local l=function(e)if a(e)=="number"and e>0 then
 if d.floor(e)==e then
 return true
 end
 end
 return false
 end
-for e,l in u(l)do
-if not t(e)then
+for e,t in r(t)do
+if not l(e)then
 return false,'{','}'else
 n=d.max(n,e)end
 end
 return true,'[',']',n
 end
-function t:WriteTable(e)local i,t,l,n=self:IsArray(e)self:Append(t)if i then
-for t=1,n do
-self:Write(e[t])if t<n then
+function t:WriteTable(e)local i,n,l,t=self:IsArray(e)self:Append(n)if i then
+for n=1,t do
+self:Write(e[n])if n<t then
 self:Append(',')end
 end
 else
-local n=true;for e,t in u(e)do
+local n=true;for t,e in r(e)do
 if not n then
 self:Append(',')end
-n=false;self:ParseString(e)self:Append(':')self:Write(t)end
+n=false;self:ParseString(t)self:Append(':')self:Write(e)end
 end
 self:Append(l)end
-function t:WriteError(n)l(e.format("Encoding of %s unsupported",r(n)))end
+function t:WriteError(n)l(e.format("Encoding of %s unsupported",c(n)))end
 function t:WriteFunction(e)if e==Null then
 self:WriteNil()else
 self:WriteError(e)end
@@ -105,12 +105,12 @@ function n:ReadNull()self:TestReservedWord{'n','u','l','l'}return nil
 end
 function n:TestReservedWord(n)for i,t in f(n)do
 if self:Next()~=t then
-l(e.format("Error reading '%s': %s",s.concat(n),self:All()))end
+l(e.format("Error reading '%s': %s",u.concat(n),self:All()))end
 end
 end
 function n:ReadNumber()local n=self:Next()local t=self:Peek()while t~=nil and e.find(t,"[%+%-%d%.eE]")do
 n=n..self:Next()t=self:Peek()end
-n=c(n)if n==nil then
+n=s(n)if n==nil then
 l(e.format("Invalid number: '%s'",n))else
 return n
 end
@@ -122,7 +122,7 @@ e=self.escapes[e]end
 end
 n=n..e
 end
-i(self:Next()=='"')local t=function(n)return e.char(c(n,16))end
+i(self:Next()=='"')local t=function(n)return e.char(s(n,16))end
 return e.gsub(n,"u%x%x(%x%x)",t)end
 function n:ReadComment()i(self:Next()=='/')local n=self:Next()if n=='/'then
 self:ReadSingleLineComment()elseif n=='*'then
@@ -191,7 +191,7 @@ function encode(n)local e=t:New()e:Write(n)return e:ToString()end
 function decode(e)local e=n:New(e)return e:Read()end
 function Null()return Null
 end
-end)package.preload['revmob_client']=(function(...)local l=require('json')require('revmob_utils')local e="1.3.0"local t='api.bcfads.com'local i='https://'..t
+end)package.preload['revmob_client']=(function(...)local i=require('json')require('revmob_utils')local e="1.3.0"local t='api.bcfads.com'local l='https://'..t
 local e='9774d5f368157442'local n='4c6dbc5d000387f3679a53d76f6944211a7f2224'local r=e
 Device={identities=nil,country=nil,manufacturer=nil,model=nil,os_version=nil,new=function(n,e)e=e or{}setmetatable(e,n)n.__index=n
 e.identities=e:buildDeviceIdentifierAsTable()e.country=system.getPreference("locale","country")e.manufacturer=e:getManufacturer()e.model=e:getModel()e.os_version=system.getInfo("platformVersion")return e
@@ -206,15 +206,15 @@ return"Apple"end
 return e
 end,getModel=function(e)local e=e:getManufacturer()if(e=="Apple")then
 return system.getInfo("architectureInfo")end
-return system.getInfo("model")end}Client={payload={},adunit=nil,applicationId=nil,hostname=t,device=nil,new=function(e,t,n)local n={adunit=t,applicationId=n,device=Device:new()}setmetatable(n,e)e.__index=e
+return system.getInfo("model")end}Client={payload={},adunit=nil,applicationId=nil,hostname=t,device=nil,new=function(e,n,t)local n={adunit=n,applicationId=t,device=Device:new()}setmetatable(n,e)e.__index=e
 return n
-end,url=function(e)return i.."/api/v4/mobile_apps/"..e.applicationId.."/"..e.adunit.."/fetch.json"end,payloadAsJsonString=function(e)return l.encode({device=e.device})end,post=function(i,e,n)if(e==nil)then
+end,url=function(e)return l.."/api/v4/mobile_apps/"..e.applicationId.."/"..e.adunit.."/fetch.json"end,payloadAsJsonString=function(e)return i.encode({device=e.device})end,post=function(r,e,t)if(e==nil)then
 return
 end
-local r=require('socket.http')local t=require("ltn12")local l={}local i,t,e=r.request{method="POST",url=i,source=t.source.string(e),headers={["Content-Length"]=tostring(#e),["Content-Type"]="application/json"},sink=t.sink.table(l),}local e={statusCode=t,response=l[1],headers=e}if n then
-n(e)end
+local i=require('socket.http')local l=require("ltn12")local n={}local i,l,e=i.request{method="POST",url=r,source=l.source.string(e),headers={["Content-Length"]=tostring(#e),["Content-Type"]="application/json"},sink=l.sink.table(n),}local e={statusCode=l,response=n[1],headers=e}if t then
+t(e)end
 return e
-end,fetch=function(e,t)local n=coroutine.create(Client.post)coroutine.resume(n,e:url(),e:payloadAsJsonString(),t)end}end)package.preload['revmob_utils']=(function(...)function log(e)print("[RevMob] "..tostring(e))io.output():flush()end
+end,fetch=function(e,n)local t=coroutine.create(Client.post)coroutine.resume(t,e:url(),e:payloadAsJsonString(),n)end}end)package.preload['revmob_utils']=(function(...)function log(e)print("[RevMob] "..tostring(e))io.output():flush()end
 getLink=function(n,e)for t,e in ipairs(e)do
 if e.rel==n then
 return e.href
@@ -241,8 +241,8 @@ Fullscreen.notifyAdListener({type="adClicked"})system.openURL(Fullscreen.clickUr
 return true
 end,update=function(e)if(Fullscreen.screenGroup)then
 Fullscreen.screenGroup:toFront()end
-end,show=function(e,n)Fullscreen.adListener=n
-local e=Client:new("fullscreens",e)e:fetch(Fullscreen.networkListener)end,create=function()Fullscreen.screenGroup=display.newGroup()Fullscreen.localizedImage=display.newImageRect(Fullscreen.getLocalizedMessagePath(Fullscreen.language),Screen:width(),Screen:height())Fullscreen.localizedImage.x=display.contentWidth/2
+end,show=function(n,e)Fullscreen.adListener=e
+local e=Client:new("fullscreens",n)e:fetch(Fullscreen.networkListener)end,create=function()Fullscreen.screenGroup=display.newGroup()Fullscreen.localizedImage=display.newImageRect(Fullscreen.getLocalizedMessagePath(Fullscreen.language),Screen:width(),Screen:height())Fullscreen.localizedImage.x=display.contentWidth/2
 Fullscreen.localizedImage.y=display.contentHeight/2
 Fullscreen.localizedImage.touch=function(e,e)Fullscreen.adClick()return true
 end
@@ -253,7 +253,10 @@ end
 Fullscreen.localizedImage:addEventListener("touch",Fullscreen.localizedImage)Fullscreen.closeButton:addEventListener("touch",Fullscreen.closeButton)Runtime:addEventListener("enterFrame",Fullscreen.update)Runtime:addEventListener("system",Fullscreen.onApplicationResume)Fullscreen.screenGroup:insert(Fullscreen.localizedImage)Fullscreen.screenGroup:insert(Fullscreen.closeButton)end,onApplicationResume=function(e)if e.type=="applicationResume"then
 log("Application resumed.")Fullscreen.release()end
 end,}end)package.preload['banner']=(function(...)local t=require('json')require('revmob_client')require('revmob_utils')Banner={DELAYED_LOAD_IMAGE=10,TMP_IMAGE_NAME="bannerImage.jpg",WIDTH=(Screen:width()>640)and 640 or Screen:width(),HEIGHT=Device:isIPad()and 100 or 50*(Screen.bottom-Screen.top)/display.contentHeight,clickUrl=nil,imageUrl=nil,image=nil,x=nil,y=nil,width=nil,height=nil,adListener=nil,new=function(n,e)local e=e or{}setmetatable(e,n)n.__index=n
-e.adClick=function(n)system.openURL(e.clickUrl)return true
+e.notifyAdListener=function(n)if e.adListener then
+e.adListener(n)end
+end
+e.adClick=function(n)e.notifyAdListener({type="adClicked"})system.openURL(e.clickUrl)return true
 end
 e.update=function(n)if(e.image)then
 if(e.image.toFront~=nil)then
@@ -265,19 +268,19 @@ local l=function(n)if e.image~=nil then
 e:release()end
 e.image=n.target
 e:show()end
-local t=function(n)local t,n=pcall(t.decode,n.response)if(not t or n==nil)then
-log("Ad not received.")return
+local n=function(n)local t,n=pcall(t.decode,n.response)if(not t or n==nil)then
+log("Ad not received.")e.notifyAdListener({type="adFailed"})return
 end
-log("Ad received")local n=n['banners'][1]['links']e.clickUrl=getLink('clicks',n)e.imageUrl=getLink('image',n)timer.performWithDelay(e.DELAYED_LOAD_IMAGE,function()display.loadRemoteImage(e.imageUrl,"GET",l,e.TMP_IMAGE_NAME,system.TemporaryDirectory)end)end
-local n=Client:new("banners",e.applicationId)n:fetch(t)return e
+local n=n['banners'][1]['links']e.clickUrl=getLink('clicks',n)e.imageUrl=getLink('image',n)timer.performWithDelay(e.DELAYED_LOAD_IMAGE,function()display.loadRemoteImage(e.imageUrl,"GET",l,e.TMP_IMAGE_NAME,system.TemporaryDirectory)log("Ad received")e.notifyAdListener({type="adReceived"})end)end
+local t=Client:new("banners",e.applicationId)t:fetch(n)return e
 end,notifyAdListener=function(e)if self.adListener then
 self.adListener(e)end
 end,show=function(e)e:setDimension()e:setPosition()e.image.tap=e.adClick
 e.image:addEventListener("tap",e.image)Runtime:addEventListener("enterFrame",e.update)end,release=function(e)log("Releasing event listeners.")Runtime:removeEventListener("enterFrame",e.update)if e.image then
 log("Removing image")pcall(e.image.removeEventListener,e.image,"tap",e.image)e.image:removeSelf()end
 e.image=nil
-end,setPosition=function(e,n,t)e.x=n or e.x
-e.y=t or e.y
+end,setPosition=function(e,t,n)e.x=t or e.x
+e.y=n or e.y
 if e.image then
 e.image.x=e.x or(Screen.left+e.WIDTH/2)e.image.y=e.y or(Screen.bottom-e.HEIGHT/2)end
 end,setDimension=function(e,t,n)e.width=t or e.width
@@ -319,8 +322,10 @@ applicationId=t[system.getInfo("platformName")]Fullscreen.show(applicationId,e)e
 end,openAdLink=function(e)if Device:isSimulator()then
 AdLink.open(n)else
 applicationId=e[system.getInfo("platformName")]AdLink.open(applicationId)end
-end,createBanner=function(e)if Device:isSimulator()then
+end,createBanner=function(e,t)if Device:isSimulator()then
 e['applicationId']=n
+e['adListener']=t
 return Banner:new(e)else
-e['applicationId']=e[system.getInfo("platformName")]return Banner:new(e)end
+e['applicationId']=e[system.getInfo("platformName")]e['adListener']=t
+return Banner:new(e)end
 end,printEnvironmentInformation=function()log("Device name: "..system.getInfo("name"))log("Model name: "..system.getInfo("model"))log("Device ID: "..system.getInfo("deviceID"))log("Environment: "..system.getInfo("environment"))log("Platform name: "..system.getInfo("platformName"))log("Platform version: "..system.getInfo("platformVersion"))log("Corona version: "..system.getInfo("version"))log("Corona build: "..system.getInfo("build"))log("Architecture: "..system.getInfo("architectureInfo"))end}

@@ -15,6 +15,11 @@ storyboard.gotoScene( "scene1" )
 
 -- Display objects added below will not respond to storyboard transitions
 require 'revmob'
+
+revmobListener = function (event)
+  print("Event: " .. event.type)
+end
+
 local params =  {
   ["Android"] = "4f56aa6e3dc441000e005a20",
   ["iPhone OS"] = "4fd619388d314b0008000213",
@@ -23,7 +28,8 @@ local params =  {
   width = 300,
   height = 40
 }
-local banner = RevMob.createBanner(params)
+local banner = RevMob.createBanner(params, revmobListener)
+
 
 -- table to setup tabBar buttons
 local tabButtons = {
@@ -31,9 +37,6 @@ local tabButtons = {
     label="Show fullscreen", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
     onPress = function(event)
       timer.performWithDelay(100, function()
-        revmobListener = function (event)
-          print("Event: " .. event.type)
-        end
         RevMob.showFullscreen(params, revmobListener)
       end)
       return true
