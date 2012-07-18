@@ -31,7 +31,10 @@ local tabButtons = {
     label="Show fullscreen", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
     onPress = function(event)
       timer.performWithDelay(100, function()
-        RevMob.showFullscreen(params)
+        revmobListener = function (event)
+          print("Event: " .. event.type)
+        end
+        RevMob.showFullscreen(params, revmobListener)
       end)
       return true
     end
