@@ -95,6 +95,14 @@ local secondLineOfButtons = {
 
 local thirdLineOfButtons = {
 	{
+	  label = "Print env", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+	  onPress = function(event)
+        RevMob.printEnvironmentInformation(ids)
+        RevMob.printEnvironmentInformation()
+        return true
+	  end
+	},
+	{
 	  label = "Change Scene (Test)", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
         RevMob.startSession(ids)
