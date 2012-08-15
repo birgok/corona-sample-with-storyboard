@@ -26,7 +26,7 @@ revmobListener = function (event)
 end
 
 -- table to setup tabBar buttons
-local tabButtons = {
+local firstLineOfButtons = {
 	{
 	  label = "Session", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
@@ -44,7 +44,17 @@ local tabButtons = {
         return true
       end
 	},
-	
+
+	{
+	  label = "Popup", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+	  onPress = function(event)
+      RevMob.showPopup(revmobListener)
+      return true
+	  end
+	},
+}
+
+local secondLineOfButtons = {
 	{
       label="Banner", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
       onPress = function(event)
@@ -56,18 +66,22 @@ local tabButtons = {
             height = 40,
             adListener = revmobListener
           }
-          local banner = RevMob.createBanner(params)
+          bannerRevMob = RevMob.createBanner(params)
         end)
         return true
       end
 	},
-
+	
 	{
-	  label = "Pop up", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
-	  onPress = function(event)
-      RevMob.showPopup(revmobListener)
-      return true
-	  end
+      label="Hide Banner", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+      onPress = function(event)
+        timer.performWithDelay(100, function()
+          if bannerRevMob then
+            bannerRevMob:release()
+          end
+        end)
+        return true
+      end
 	},
 
 	{
@@ -79,15 +93,9 @@ local tabButtons = {
 	},
 }
 
--- create the actual tabBar widget
-local tabBar = widget.newTabBar{
- top = 0, -- 50 is default height for tabBar widget
- buttons = tabButtons
-}
-
-local tabButtonsForAdditionalTests = {
+local thirdLineOfButtons = {
 	{
-	  label = "Change Scene", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+	  label = "Change Scene (Test)", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
         RevMob.startSession(ids)
         storyboard.gotoScene("scene2", "fade", 400)
@@ -107,8 +115,19 @@ local tabButtonsForAdditionalTests = {
 	  end
 	}
 }
+
+-- create the actual tabBar widget
+local tabBar = widget.newTabBar{
+ top = 0, -- 50 is default height for tabBar widget
+ buttons = firstLineOfButtons
+}
 	
 local tabBar2 = widget.newTabBar{
  top = 50, -- 50 is default height for tabBar widget
- buttons = tabButtonsForAdditionalTests
+ buttons = secondLineOfButtons
+}
+
+local tabBar2 = widget.newTabBar{
+ top = 100, -- 50 is default height for tabBar widget
+ buttons = thirdLineOfButtons
 }
