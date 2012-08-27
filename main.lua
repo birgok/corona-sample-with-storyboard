@@ -26,7 +26,7 @@ revmobListener = function (event)
 end
 
 -- table to setup tabBar buttons
-local firstLineOfButtons = {
+local line1 = {
 	{
 	  label = "Session", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
@@ -35,16 +35,6 @@ local firstLineOfButtons = {
 	  end
 	},
   
-    {
-      label="Fullscreen", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
-      onPress = function(event)
-        timer.performWithDelay(100, function()
-          RevMob.showFullscreen(revmobListener)
-        end)
-        return true
-      end
-	},
-
 	{
 	  label = "Popup", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
@@ -52,9 +42,17 @@ local firstLineOfButtons = {
       return true
 	  end
 	},
+	
+	{
+	  label = "Link", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+	  onPress = function(event)
+      RevMob.openAdLink()
+      return true
+	  end
+	},
 }
 
-local secondLineOfButtons = {
+local line2 = {
 	{
       label="Banner", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
       onPress = function(event)
@@ -77,6 +75,18 @@ local secondLineOfButtons = {
       onPress = function(event)
         timer.performWithDelay(100, function()
           if bannerRevMob then
+            bannerRevMob:hide()
+          end
+        end)
+        return true
+      end
+	},
+	
+	{
+      label="Release Banner", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+      onPress = function(event)
+        timer.performWithDelay(100, function()
+          if bannerRevMob then
             bannerRevMob:release()
           end
         end)
@@ -84,16 +94,42 @@ local secondLineOfButtons = {
       end
 	},
 
-	{
-	  label = "Link", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
-	  onPress = function(event)
-      RevMob.openAdLink()
-      return true
-	  end
-	},
 }
 
-local thirdLineOfButtons = {
+local line3 = {
+    {
+      label="Random Fullscreen", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+      onPress = function(event)
+        timer.performWithDelay(100, function()
+          RevMob.showFullscreen(revmobListener)
+        end)
+        return true
+      end
+	},
+	
+    {
+      label="Fullscreen Web", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+      onPress = function(event)
+        timer.performWithDelay(100, function()
+          RevMob.showFullscreenWeb({})
+        end)
+        return true
+      end
+	},
+	
+    {
+      label="Fullscreen Image", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+      onPress = function(event)
+        timer.performWithDelay(100, function()
+          RevMob.showFullscreenImage(revmobListener)
+        end)
+        return true
+      end
+	},
+
+}
+
+local line4 = {
 	{
 	  label = "Print env", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
@@ -127,15 +163,20 @@ local thirdLineOfButtons = {
 -- create the actual tabBar widget
 local tabBar = widget.newTabBar{
  top = 0, -- 50 is default height for tabBar widget
- buttons = firstLineOfButtons
+ buttons = line1
 }
 	
 local tabBar2 = widget.newTabBar{
  top = 50, -- 50 is default height for tabBar widget
- buttons = secondLineOfButtons
+ buttons = line2
 }
 
 local tabBar2 = widget.newTabBar{
  top = 100, -- 50 is default height for tabBar widget
- buttons = thirdLineOfButtons
+ buttons = line3
+}
+
+local tabBar2 = widget.newTabBar{
+ top = 150, -- 50 is default height for tabBar widget
+ buttons = line4
 }

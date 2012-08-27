@@ -36,7 +36,7 @@ function scene:createScene( event )
 	text1 = display.newText( "Scene 1", 0, 0, native.systemFontBold, 24 )
 	text1:setTextColor( 255 )
 	text1:setReferencePoint( display.CenterReferencePoint )
-	text1.x, text1.y = display.contentWidth * 0.5, 200
+	text1.x, text1.y = display.contentWidth * 0.5, 270
 	screenGroup:insert( text1 )
 
 	text2 = display.newText( "MemUsage: ", 0, 0, native.systemFont, 16 )
