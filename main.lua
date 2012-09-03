@@ -23,6 +23,7 @@ require 'revmob'
 
 revmobListener = function (event)
   print("Event: " .. event.type)
+  for k,v in pairs(event) do print(tostring(k) .. ': ' .. tostring(v)) end
 end
 
 -- table to setup tabBar buttons
@@ -46,7 +47,7 @@ local line1 = {
 	{
 	  label = "Link", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
-      RevMob.openAdLink()
+      RevMob.openAdLink(revmobListener)
       return true
 	  end
 	},
