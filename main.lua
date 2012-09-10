@@ -4,7 +4,7 @@
 --
 -----------------------------------------------------------------------------------------
 
-local ids =  {
+local REVMOB_IDS =  {
   ["Android"] = "4f56aa6e3dc441000e005a20",
   ["iPhone OS"] = "4fd619388d314b0008000213"
 }
@@ -31,26 +31,27 @@ local line1 = {
 	{
 	  label = "Session", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
-        RevMob.startSession(ids)
+        RevMob.startSession(REVMOB_IDS)
         return true
-	  end
-	},
-  
-	{
-	  label = "Popup", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
-	  onPress = function(event)
-      RevMob.showPopup(revmobListener)
-      return true
 	  end
 	},
 	
 	{
-	  label = "Link", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+	  label = "Test Success", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
-      RevMob.openAdLink(revmobListener)
-      return true
+        RevMob.startSession(REVMOB_IDS, RevMob.TEST_WITH_ADS)
+        return true
 	  end
 	},
+	
+	{
+	  label = "Test Fail", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+	  onPress = function(event)
+        RevMob.startSession(REVMOB_IDS, RevMob.TEST_WITHOUT_ADS)
+        return true
+	  end
+	},
+
 }
 
 local line2 = {
@@ -132,9 +133,27 @@ local line3 = {
 
 local line4 = {
 	{
+	  label = "Popup", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+	  onPress = function(event)
+      RevMob.showPopup(revmobListener)
+      return true
+	  end
+	},
+	
+	{
+	  label = "Link", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+	  onPress = function(event)
+      RevMob.openAdLink(revmobListener)
+      return true
+	  end
+	},
+}
+
+local line5 = {
+	{
 	  label = "Print env", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
-        RevMob.printEnvironmentInformation(ids)
+        RevMob.printEnvironmentInformation(REVMOB_IDS)
         RevMob.printEnvironmentInformation()
         return true
 	  end
@@ -142,7 +161,7 @@ local line4 = {
 	{
 	  label = "Change Scene (Test)", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
-        RevMob.startSession(ids)
+        RevMob.startSession(REVMOB_IDS)
         storyboard.gotoScene("scene2", "fade", 400)
         RevMob.showFullscreen(revmobListener)
         storyboard.gotoScene("scene3", "fromLeft", 400)
@@ -161,23 +180,8 @@ local line4 = {
 	}
 }
 
--- create the actual tabBar widget
-local tabBar = widget.newTabBar{
- top = 0, -- 50 is default height for tabBar widget
- buttons = line1
-}
-	
-local tabBar2 = widget.newTabBar{
- top = 50, -- 50 is default height for tabBar widget
- buttons = line2
-}
-
-local tabBar2 = widget.newTabBar{
- top = 100, -- 50 is default height for tabBar widget
- buttons = line3
-}
-
-local tabBar2 = widget.newTabBar{
- top = 150, -- 50 is default height for tabBar widget
- buttons = line4
-}
+widget.newTabBar{ top = 0, buttons = line1 }
+widget.newTabBar{ top = 50, buttons = line2 }
+widget.newTabBar{ top = 100, buttons = line3 }
+widget.newTabBar{ top = 150, buttons = line4 }
+widget.newTabBar{ top = 200, buttons = line5 }
