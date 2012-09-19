@@ -8,6 +8,7 @@ local REVMOB_IDS =  {
   ["Android"] = "4f56aa6e3dc441000e005a20",
   ["iPhone OS"] = "4fd619388d314b0008000213"
 }
+local PLACEMENT_IDS = nil
 
 display.setStatusBar( display.HiddenStatusBar )
 
@@ -51,7 +52,15 @@ local line1 = {
         return true
 	  end
 	},
-
+	
+	{
+	  label = "Placement", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+	  onPress = function(event)
+        PLACEMENT_IDS = { ["Android"] = "5058bc97e658200c00000010", ["iPhone OS"] = "5058bc5f5d9fb60800000001" }
+        return true
+	  end
+	},
+	
 }
 
 local line2 = {
@@ -66,7 +75,7 @@ local line2 = {
             height = 40,
             adListener = revmobListener
           }
-          bannerRevMob = RevMob.createBanner(params)
+          bannerRevMob = RevMob.createBanner(params, PLACEMENT_IDS)
         end)
         return true
       end
@@ -103,7 +112,7 @@ local line3 = {
       label="Random Fullscreen", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
       onPress = function(event)
         timer.performWithDelay(100, function()
-          RevMob.showFullscreen(revmobListener)
+          RevMob.showFullscreen(revmobListener, PLACEMENT_IDS)
         end)
         return true
       end
@@ -113,7 +122,7 @@ local line3 = {
       label="Fullscreen Web", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
       onPress = function(event)
         timer.performWithDelay(100, function()
-          RevMob.showFullscreenWeb({})
+          RevMob.showFullscreenWeb({}, PLACEMENT_IDS)
         end)
         return true
       end
@@ -123,7 +132,7 @@ local line3 = {
       label="Fullscreen Image", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
       onPress = function(event)
         timer.performWithDelay(100, function()
-          RevMob.showFullscreenImage(revmobListener)
+          RevMob.showFullscreenImage(revmobListener, PLACEMENT_IDS)
         end)
         return true
       end
@@ -135,7 +144,7 @@ local line4 = {
 	{
 	  label = "Popup", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
-      RevMob.showPopup(revmobListener)
+      RevMob.showPopup(revmobListener, PLACEMENT_IDS)
       return true
 	  end
 	},
@@ -143,7 +152,7 @@ local line4 = {
 	{
 	  label = "Link", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
-      RevMob.openAdLink(revmobListener)
+      RevMob.openAdLink(revmobListener, PLACEMENT_IDS)
       return true
 	  end
 	},
