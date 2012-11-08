@@ -1,12 +1,12 @@
 package.preload['json']=(function(...)local e=string
-local r=math
-local d=table
+local u=math
+local s=table
 local o=error
 local c=tonumber
-local u=tostring
+local d=tostring
 local a=type
 local l=setmetatable
-local s=pairs
+local r=pairs
 local f=ipairs
 local i=assert
 local n=Chipmunk
@@ -15,7 +15,7 @@ e.buffer={}return e
 end
 function n:Append(e)self.buffer[#self.buffer+1]=e
 end
-function n:ToString()return d.concat(self.buffer)end
+function n:ToString()return s.concat(self.buffer)end
 local t={backslashes={['\b']="\\b",['\t']="\\t",['\n']="\\n",['\f']="\\f",['\r']="\\r",['"']='\\"',['\\']="\\\\",['/']="\\/"}}function t:New()local e={}e.writer=n:New()l(e,self)self.__index=self
 return e
 end
@@ -32,21 +32,21 @@ self:WriteError(e)elseif n=="userdata"then
 self:WriteError(e)end
 end
 function t:WriteNil()self:Append("null")end
-function t:WriteString(e)self:Append(u(e))end
-function t:ParseString(n)self:Append('"')self:Append(e.gsub(n,'[%z%c\\"/]',function(n)local t=self.backslashes[n]if t then return t end
-return e.format("\\u%.4X",e.byte(n))end))self:Append('"')end
+function t:WriteString(e)self:Append(d(e))end
+function t:ParseString(n)self:Append('"')self:Append(e.gsub(n,'[%z%c\\"/]',function(t)local n=self.backslashes[t]if n then return n end
+return e.format("\\u%.4X",e.byte(t))end))self:Append('"')end
 function t:IsArray(t)local n=0
 local o=function(e)if a(e)=="number"and e>0 then
-if r.floor(e)==e then
+if u.floor(e)==e then
 return true
 end
 end
 return false
 end
-for e,t in s(t)do
+for e,t in r(t)do
 if not o(e)then
 return false,'{','}'else
-n=r.max(n,e)end
+n=u.max(n,e)end
 end
 return true,'[',']',n
 end
@@ -56,13 +56,13 @@ self:Write(e[t])if t<n then
 self:Append(',')end
 end
 else
-local n=true;for e,t in s(e)do
+local n=true;for t,e in r(e)do
 if not n then
 self:Append(',')end
-n=false;self:ParseString(e)self:Append(':')self:Write(t)end
+n=false;self:ParseString(t)self:Append(':')self:Write(e)end
 end
 self:Append(o)end
-function t:WriteError(n)o(e.format("Encoding of %s unsupported",u(n)))end
+function t:WriteError(n)o(e.format("Encoding of %s unsupported",d(n)))end
 function t:WriteFunction(e)if e==Null then
 self:WriteNil()else
 self:WriteError(e)end
@@ -105,7 +105,7 @@ function n:ReadNull()self:TestReservedWord{'n','u','l','l'}return nil
 end
 function n:TestReservedWord(n)for i,t in f(n)do
 if self:Next()~=t then
-o(e.format("Error reading '%s': %s",d.concat(n),self:All()))end
+o(e.format("Error reading '%s': %s",s.concat(n),self:All()))end
 end
 end
 function n:ReadNumber()local n=self:Next()local t=self:Peek()while t~=nil and e.find(t,"[%+%-%d%.eE]")do
@@ -191,25 +191,25 @@ function encode(n)local e=t:New()e:Write(n)return e:ToString()end
 function decode(e)local e=n:New(e)return e:Read()end
 function Null()return Null
 end
-end)package.preload['asyncHttp']=(function(...)local e=require"socket"local n=require"dispatch"local u=require"socket.http"local r=require"ltn12"n.TIMEOUT=10
+end)package.preload['asyncHttp']=(function(...)local e=require"socket"local n=require"dispatch"local s=require"socket.http"local a=require"ltn12"n.TIMEOUT=10
 local t=Runtime
-local f=table
+local c=table
 local e=print
 local e=coroutine
-module(...)function request(d,c,l,e)local n=n.newhandler("coroutine")local i=true
-n:start(function()local t,s=r.sink.table()local a,o
+module(...)function request(d,u,l,e)local n=n.newhandler("coroutine")local o=true
+n:start(function()local t,f=a.sink.table()local i,r
 if e then
 if e.headers then
-a=e.headers
+i=e.headers
 end
 if e.body then
-o=r.source.string(e.body)end
+r=a.source.string(e.body)end
 end
-local e,n,o=u.request{url=d,method=c,create=n.tcp,sink=t,source=o,headers=a}if e then
-l{statusCode=n,headers=o,response=f.concat(s),sink=t,isError=false}else
+local i,n,e=s.request{url=d,method=u,create=n.tcp,sink=t,source=r,headers=i}if i then
+l{statusCode=n,headers=e,response=c.concat(f),sink=t,isError=false}else
 l{isError=true}end
-i=false
-end)local e={}function e.enterFrame()if i then
+o=false
+end)local e={}function e.enterFrame()if o then
 n:step()else
 t:removeEventListener("enterFrame",e)end
 end
@@ -234,18 +234,18 @@ return n.unpack(e)end
 end
 end
 end
-local function s()local e={}local t={}return n.setmetatable(t,{__index={insert=function(t,n)if not e[n]then
+local function a()local e={}local t={}return n.setmetatable(t,{__index={insert=function(t,n)if not e[n]then
 o.insert(t,n)e[n]=o.getn(t)end
-end,remove=function(r,t)local i=e[t]if i then
-e[t]=nil
-local n=o.remove(r)if n~=t then
-e[n]=i
-r[i]=n
+end,remove=function(i,n)local t=e[n]if t then
+e[n]=nil
+local o=o.remove(i)if o~=n then
+e[o]=t
+i[t]=o
 end
 end
 end}})end
-local function a(o,e,i)if not e then return nil,i end
-e:settimeout(0)local s={__index=function(o,t)o[t]=function(...)arg[1]=e
+local function s(o,e,i)if not e then return nil,i end
+e:settimeout(0)local a={__index=function(o,t)o[t]=function(...)arg[1]=e
 return e[t](n.unpack(arg))end
 return o[t]end}local r=false
 local i={}function i:settimeout(e,n)if e==0 then r=true
@@ -260,19 +260,19 @@ return nil,"timeout"end
 r,i,n=e:send(l,n+1,a)if i~="timeout"then return r,i,n end
 end
 end
-function i:receive(a,i)local n="timeout"local l
+function i:receive(a,n)local i="timeout"local l
 while true do
 if t.yield(o.receiving,e)=="timeout"then
 return nil,"timeout"end
-l,n,i=e:receive(a,i)if(n~="timeout")or r then
-return l,n,i
+l,i,n=e:receive(a,n)if(i~="timeout")or r then
+return l,i,n
 end
 end
 end
-function i:connect(r,l)local i,n=e:connect(r,l)if n=="timeout"then
+function i:connect(l,r)local i,n=e:connect(l,r)if n=="timeout"then
 if t.yield(o.sending,e)=="timeout"then
 return nil,"timeout"end
-i,n=e:connect(r,l)if i or n=="already connected"then return 1
+i,n=e:connect(l,r)if i or n=="already connected"then return 1
 else return nil,"non-blocking connect failed"end
 else return i,n end
 end
@@ -280,33 +280,33 @@ function i:accept()while 1 do
 if t.yield(o.receiving,e)=="timeout"then
 return nil,"timeout"end
 local n,e=e:accept()if e~="timeout"then
-return a(o,n,e)end
+return s(o,n,e)end
 end
 end
 function i:close()o.stamp[e]=nil
 o.sending.set:remove(e)o.sending.cortn[e]=nil
 o.receiving.set:remove(e)o.receiving.cortn[e]=nil
 return e:close()end
-return n.setmetatable(i,s)end
+return n.setmetatable(i,a)end
 local o={__index={}}function schedule(o,i,e,t)if i then
 if o and e then
 e.set:insert(t)e.cortn[t]=o
 e.stamp[t]=r.gettime()end
 else n.error(e)end
 end
-function kick(e,n)e.cortn[n]=nil
-e.set:remove(n)end
+function kick(n,e)n.cortn[e]=nil
+n.set:remove(e)end
 function wakeup(o,n)local e=o.cortn[n]if e then
 kick(o,n)return e,t.resume(e)else
 return nil,true
 end
 end
-function abort(o,n)local e=o.cortn[n]if e then
-kick(o,n)t.resume(e,"timeout")end
+function abort(o,e)local n=o.cortn[e]if n then
+kick(o,e)t.resume(n,"timeout")end
 end
-function o.__index:step()local e,t=r.select(self.receiving.set,self.sending.set,.1)for n,e in n.ipairs(e)do
+function o.__index:step()local t,e=r.select(self.receiving.set,self.sending.set,.1)for n,e in n.ipairs(t)do
 schedule(wakeup(self.receiving,e))end
-for n,e in n.ipairs(t)do
+for n,e in n.ipairs(e)do
 schedule(wakeup(self.sending,e))end
 local t=r.gettime()for e,n in n.pairs(self.stamp)do
 if e.class=="tcp{client}"and t-n>TIMEOUT then
@@ -314,9 +314,9 @@ abort(self.sending,e)abort(self.receiving,e)end
 end
 end
 function o.__index:start(e)local e=t.create(e)schedule(e,t.resume(e))end
-function l.coroutine()local e={}local e={stamp=e,sending={name="sending",set=s(),cortn={},stamp=e},receiving={name="receiving",set=s(),cortn={},stamp=e},}function e.tcp()return a(e,r.tcp())end
+function l.coroutine()local e={}local e={stamp=e,sending={name="sending",set=a(),cortn={},stamp=e},receiving={name="receiving",set=a(),cortn={},stamp=e},}function e.tcp()return s(e,r.tcp())end
 return n.setmetatable(e,o)end
-end)package.preload['revmob_messages']=(function(...)REVMOB_MSG_NO_ADS="No ads for this device/country right now, or your App ID is paused."REVMOB_MSG_APP_IDLING="No ads because your App ID or Placement ID is idling."REVMOB_MSG_NO_SESSION="The method RevMob.startSession(REVMOB_IDS) has not been called."REVMOB_MSG_UNKNOWN_REASON="Ad was not received for an unknown reason: "REVMOB_MSG_INVALID_DEVICE_ID="Device requirements not met."REVMOB_MSG_INVALID_APPID="App not recognized due to invalid App ID."REVMOB_MSG_INVALID_PLACEMENTID="No ads because you type an invalid Placement ID."REVMOB_MSG_OPEN_MARKET="Opening market"REVMOB_EVENT_AD_RECEIVED="adReceived"REVMOB_EVENT_AD_NOT_RECEIVED="adNotReceived"REVMOB_EVENT_AD_DISPLAYED="adDisplayed"REVMOB_EVENT_AD_CLICKED="adClicked"REVMOB_EVENT_AD_CLOSED="adClosed"REVMOB_EVENT_INSTALL_RECEIVED="installReceived"REVMOB_EVENT_INSTALL_NOT_RECEIVED="installNotReceived"end)package.preload['revmob_about']=(function(...)require('revmob_utils')REVMOB_SDK={VERSION="3.4.4"}local e=function()if RevMobUtils.isAndroid()then
+end)package.preload['revmob_messages']=(function(...)REVMOB_MSG_NO_ADS="No ads for this device/country right now, or your App ID is paused."REVMOB_MSG_APP_IDLING="No ads because your App ID or Placement ID is idling."REVMOB_MSG_NO_SESSION="The method RevMob.startSession(REVMOB_IDS) has not been called."REVMOB_MSG_UNKNOWN_REASON="Ad was not received for an unknown reason: "REVMOB_MSG_INVALID_DEVICE_ID="Device requirements not met."REVMOB_MSG_INVALID_APPID="App not recognized due to invalid App ID."REVMOB_MSG_INVALID_PLACEMENTID="No ads because you type an invalid Placement ID."REVMOB_MSG_OPEN_MARKET="Opening market"REVMOB_EVENT_AD_RECEIVED="adReceived"REVMOB_EVENT_AD_NOT_RECEIVED="adNotReceived"REVMOB_EVENT_AD_DISPLAYED="adDisplayed"REVMOB_EVENT_AD_CLICKED="adClicked"REVMOB_EVENT_AD_CLOSED="adClosed"REVMOB_EVENT_INSTALL_RECEIVED="installReceived"REVMOB_EVENT_INSTALL_NOT_RECEIVED="installNotReceived"end)package.preload['revmob_about']=(function(...)require('revmob_utils')REVMOB_SDK={VERSION="3.4.5"}local e=function()if RevMobUtils.isAndroid()then
 return"corona-android"elseif RevMobUtils.isIOS()then
 return"corona-ios"else
 return"corona"end
@@ -370,11 +370,11 @@ if RevMobUtils.isAndroid()then
 e.headers={["Content-Length"]=tostring(#t),["Content-Type"]="application/json"}asyncHttp.request(o,"POST",n,e)else
 e.headers={["Content-Type"]="application/json"}e.timeout=r
 network.request(o,"POST",n,e)end
-end,postWithoutFollowRedirect=function(o,n,t)if n==nil then return end
-if not t then t=function(e)end
+end,postWithoutFollowRedirect=function(o,e,n)if e==nil then return end
+if not n then n=function(e)end
 end
-local e={}e.body=n
-e.headers={["Content-Length"]=tostring(#n),["Content-Type"]="application/json"}asyncHttp.request(o,"POST",t,e)end,fetch=function(e,n)if RevMobSessionManager.isSessionStarted()then
+local t={}t.body=e
+t.headers={["Content-Length"]=tostring(#e),["Content-Type"]="application/json"}asyncHttp.request(o,"POST",n,t)end,fetch=function(e,n)if RevMobSessionManager.isSessionStarted()then
 if e.placementID~=nil then
 log("Ad registered with Placement ID "..e.placementID)end
 RevMobClient.post(e:url(),e:payloadAsJsonString(),n)else
@@ -407,21 +407,21 @@ local n=REVMOB_MSG_UNKNOWN_REASON..tostring(n).." / "..tostring(e)log("Reason: "
 return false,e
 end
 return n,e
-end,getMarketURL=function(o,e)local t=require('socket.http')local n=require("ltn12")local i={}if e==nil then
+end,getMarketURL=function(n,e)local o=require('socket.http')local t=require("ltn12")local i={}if e==nil then
 e=""end
-local n,e,i=t.request{method="POST",url=o,source=n.source.string(e),headers={["Content-Length"]=tostring(#e),["Content-Type"]="application/json"},sink=n.sink.table(i),}if(e==302 or e==303)then
-local t="details%?id=[a-zA-Z0-9%.]+"local n="android%?p=[a-zA-Z0-9%.]+"local e=i['location']if(string.sub(e,1,string.len("market://"))=="market://")then
-return e
-elseif(string.match(e,t,1))then
-local e=string.match(e,t,1)return"market://"..e
-elseif(string.sub(e,1,string.len("amzn://"))=="amzn://")then
+local t,e,o=o.request{method="POST",url=n,source=t.source.string(e),headers={["Content-Length"]=tostring(#e),["Content-Type"]="application/json"},sink=t.sink.table(i),}if(e==302 or e==303)then
+local n="details%?id=[a-zA-Z0-9%.]+"local t="android%?p=[a-zA-Z0-9%.]+"local e=o['location']if(string.sub(e,1,string.len("market://"))=="market://")then
 return e
 elseif(string.match(e,n,1))then
-local e=string.match(e,n,1)return"amzn://apps/"..e
+local e=string.match(e,n,1)return"market://"..e
+elseif(string.sub(e,1,string.len("amzn://"))=="amzn://")then
+return e
+elseif(string.match(e,t,1))then
+local e=string.match(e,t,1)return"amzn://apps/"..e
 else
 return RevMobClient.getMarketURL(e)end
 end
-return o
+return n
 end}end)package.preload['revmob_utils']=(function(...)function log(e)print("[RevMob] "..tostring(e))io.output():flush()end
 function logTable(e)for e,n in pairs(e)do log(tostring(e)..': '..tostring(n))end
 end
@@ -431,12 +431,14 @@ return e.href
 end
 end
 return nil
-end}RevMobScreen={left=function()return display.screenOriginX end,top=function()return display.screenOriginY end,right=function()return display.contentWidth-display.screenOriginX end,bottom=function()return display.contentHeight-display.screenOriginY end,width=function()return RevMobScreen.right()-RevMobScreen.left()end,height=function()return RevMobScreen.bottom()-RevMobScreen.top()end,}end)package.preload['fullscreen']=(function(...)require('revmob_messages')require('revmob_client')require('revmob_utils')local n="fullscreen"Fullscreen={autoshow=true,listener=nil,clickUrl=nil,imageUrl=nil,closeButtonUrl=nil,component=nil,_clicked=false,new=function(e)local e=e or{}setmetatable(e,Fullscreen)e.component=display.newGroup()e.component.alpha=0
+end}RevMobScreen={left=function()return display.screenOriginX end,top=function()return display.screenOriginY end,right=function()return display.contentWidth-display.screenOriginX end,bottom=function()return display.contentHeight-display.screenOriginY end,width=function()return RevMobScreen.right()-RevMobScreen.left()end,height=function()return RevMobScreen.bottom()-RevMobScreen.top()end,}end)package.preload['fullscreen']=(function(...)require('revmob_messages')require('revmob_client')require('revmob_utils')local n="fullscreen"Fullscreen={autoshow=true,listener=nil,clickUrl=nil,imageUrl=nil,closeButtonUrl=nil,component=nil,_clicked=false,_released=false,new=function(e)local e=e or{}setmetatable(e,Fullscreen)e.component=display.newGroup()e.component.alpha=0
 return e
 end,load=function(e,o)e._networkListener=function(t)local t,n=RevMobClient.theFetchSucceed(n,t,e.listener)if t then
 local n=n['fullscreen']['links']e.clickUrl=RevMobUtils.getLink('clicks',n)e.imageUrl=RevMobUtils.getLink('image',n)e.closeButtonUrl=RevMobUtils.getLink('close_button',n)e:loadImage()e:loadCloseButton()end
 end
-local n=RevMobClient:new("fullscreens",o)n:fetch(e._networkListener)end,loadImage=function(e)e._loadImageListener=function(t)if t.isError or t.target==nil or e.imageUrl==nil then
+local n=RevMobClient:new("fullscreens",o)n:fetch(e._networkListener)end,loadImage=function(e)if e._released==true then log("Fullscreen was closed.")return end
+e._loadImageListener=function(t)if e._released==true then if t.target then t.target:removeSelf()end log("Fullscreen was closed.")return end
+if t.isError or t.target==nil or e.imageUrl==nil then
 log("Fail to load ad image: "..tostring(e.imageUrl))if e.listener~=nil then e.listener({type=REVMOB_EVENT_AD_NOT_RECEIVED,ad=n})end
 return
 end
@@ -450,7 +452,9 @@ return true
 end
 e.image.touch=function(n)return true end
 e.image:addEventListener("tap",e.image)e.image:addEventListener("touch",e.image)e.component:insert(1,e.image)e:_update_resources_loaded()end
-display.loadRemoteImage(e.imageUrl,"GET",e._loadImageListener,"fullscreen.jpg",system.TemporaryDirectory)end,loadCloseButton=function(e)e._loadCloseButtonListener=function(t)if t.isError or t.target==nil or e.closeButtonUrl==nil then
+display.loadRemoteImage(e.imageUrl,"GET",e._loadImageListener,"fullscreen.jpg",system.TemporaryDirectory)end,loadCloseButton=function(e)if e._released==true then return end
+e._loadCloseButtonListener=function(t)if e._released==true then if t.target then t.target:removeSelf()end return end
+if t.isError or t.target==nil or e.closeButtonUrl==nil then
 log("Fail to load close button image: "..tostring(e.closeButtonUrl))if e.listener~=nil then e.listener({type=REVMOB_EVENT_AD_NOT_RECEIVED,ad=n})end
 return
 end
@@ -475,9 +479,12 @@ e.closeButtonImage.y=40
 e.closeButtonImage.width=RevMobDevice:isIPad()and 35 or 40
 e.closeButtonImage.height=RevMobDevice:isIPad()and 35 or 40
 end
-end,isLoaded=function(e)return e.clickUrl~=nil and e.component.numChildren>=2
+end,isLoaded=function(e)return e.clickUrl~=nil and e.component~=nil and e.component.numChildren>=2
+end,hide=function(e)if not e:isLoaded()then e.autoshow=false end
+if e.component~=nil then e.component.alpha=0 end
 end,show=function(e)if not e:isLoaded()then
-log("Ad is not loaded yet to be shown")return
+log("Ad is not loaded yet to be shown")e.autoshow=true
+return
 end
 if e.component~=nil then
 e.component.alpha=1
@@ -485,7 +492,9 @@ e._moveToFront=function(n)if e.component~=nil then e.component:toFront()end end
 Runtime:addEventListener("enterFrame",e._moveToFront)e._updateAccordingToOrientation=function(n)e:_configureDimensions()end
 Runtime:addEventListener("orientation",e._updateAccordingToOrientation)if e.listener~=nil then e.listener({type=REVMOB_EVENT_AD_DISPLAYED,ad=n})end
 end
-end,close=function(e)if e._moveToFront~=nil then Runtime:removeEventListener("enterFrame",e._moveToFront)end
+end,close=function(e)e._released=true
+e.autoshow=false
+if e._moveToFront~=nil then Runtime:removeEventListener("enterFrame",e._moveToFront)end
 if e._updateAccordingToOrientation~=nil then Runtime:removeEventListener("orientation",e._updateAccordingToOrientation)end
 e._updateAccordingToOrientation=nil
 e._loadCloseButtonListener=nil
@@ -503,13 +512,14 @@ if e.component~=nil then e.component:removeSelf()e.component=nil end
 e._clicked=false
 log("Fullscreen closed")end,}Fullscreen.__index=Fullscreen
 end)package.preload['fullscreen_web']=(function(...)require('revmob_messages')require('revmob_client')require('revmob_utils')local n="fullscreen"FullscreenWeb={autoshow=true,listener=nil,clickUrl=nil,htmlUrl=nil,new=function(e)local e=e or{}setmetatable(e,FullscreenWeb)return e
-end,load=function(e,o)e.networkListener=function(t)local o,t=RevMobClient.theFetchSucceed(n,t,e.listener)if o then
-local t=t['fullscreen']['links']e.clickUrl=RevMobUtils.getLink('clicks',t)e.htmlUrl=RevMobUtils.getLink('html',t)if e.listener~=nil then e.listener({type=REVMOB_EVENT_AD_RECEIVED,ad=n})end
+end,load=function(e,o)e.networkListener=function(t)local t,o=RevMobClient.theFetchSucceed(n,t,e.listener)if t then
+local t=o['fullscreen']['links']e.clickUrl=RevMobUtils.getLink('clicks',t)e.htmlUrl=RevMobUtils.getLink('html',t)if e.listener~=nil then e.listener({type=REVMOB_EVENT_AD_RECEIVED,ad=n})end
 if e.autoshow then
 e:show()end
 end
 end
 local n=RevMobClient:new("fullscreens",o)n:fetch(e.networkListener)end,isLoaded=function(e)return e.htmlUrl~=nil and e.clickUrl~=nil
+end,hide=function(e)if not e:isLoaded()then e.autoshow=false end
 end,show=function(e)if not e:isLoaded()then
 log("Ad is not loaded yet to be shown")return
 end
@@ -535,31 +545,43 @@ timer.performWithDelay(1,function()if e.listener~=nil then e.listener({type=REVM
 native.showWebPopup(e.htmlUrl,t)end)Runtime:addEventListener("orientation",e.changeOrientationListener)end,close=function(e)if e.changeOrientationListener then
 Runtime:removeEventListener("orientation",e.changeOrientationListener)end
 native.cancelWebPopup()end,}FullscreenWeb.__index=FullscreenWeb
-end)package.preload['fullscreen_chooser']=(function(...)require('revmob_messages')require('revmob_client')require('revmob_utils')require('fullscreen')require('fullscreen_web')local t="fullscreen"FullscreenChooser={listener=nil,placementID=nil,new=function(e)local e=e or{}setmetatable(e,FullscreenChooser)return e
-end,show=function(e)local n=function(n)local o,n=RevMobClient.theFetchSucceed(t,n,e.listener)if o then
-local n=n['fullscreen']['links']local i=RevMobUtils.getLink('clicks',n)local o=RevMobUtils.getLink('html',n)local r=RevMobUtils.getLink('image',n)local n=RevMobUtils.getLink('close_button',n)if e.listener~=nil then e.listener({type=REVMOB_EVENT_AD_RECEIVED,ad=t})end
-if o then
-log("Rich fullscreen")local e=FullscreenWeb.new({listener=e.listener})e.htmlUrl=o
-e.clickUrl=i
-e:show()else
-log("Static fullscreen")local e=Fullscreen.new({listener=e.listener})e.imageUrl=r
-e.closeButtonUrl=n
-e.clickUrl=i
-e:loadImage()e:loadCloseButton()end
+end)package.preload['fullscreen_chooser']=(function(...)require('revmob_messages')require('revmob_client')require('revmob_utils')require('fullscreen')require('fullscreen_web')local o="fullscreen"FullscreenChooser={listener=nil,placementID=nil,fullscreen=nil,autoshow=true,new=function(e)local e=e or{}setmetatable(e,FullscreenChooser)return e
+end,load=function(e)local n=function(n)local t,n=RevMobClient.theFetchSucceed(o,n,e.listener)if t then
+local n=n['fullscreen']['links']local i=RevMobUtils.getLink('clicks',n)local t=RevMobUtils.getLink('html',n)local r=RevMobUtils.getLink('image',n)local n=RevMobUtils.getLink('close_button',n)if e.listener~=nil then e.listener({type=REVMOB_EVENT_AD_RECEIVED,ad=o})end
+if t then
+log("Rich fullscreen")e.fullscreen=FullscreenWeb.new({listener=e.listener})e.fullscreen.htmlUrl=t
+e.fullscreen.clickUrl=i
+e.fullscreen.autoshow=e.autoshow
+if e.autoshow==true then
+e.fullscreen:show()end
+else
+log("Static fullscreen")e.fullscreen=Fullscreen.new({listener=e.listener})e.fullscreen.imageUrl=r
+e.fullscreen.closeButtonUrl=n
+e.fullscreen.clickUrl=i
+e.fullscreen.autoshow=e.autoshow
+e.fullscreen:loadImage()e.fullscreen:loadCloseButton()end
 end
 end
-local e=RevMobClient:new("fullscreens",e.placementID)e:fetch(n)end,}FullscreenChooser.__index=FullscreenChooser
-end)package.preload['banner']=(function(...)require('revmob_messages')require('revmob_client')require('revmob_utils')local n="banner"Banner={autoshow=true,listener=nil,clickUrl=nil,imageUrl=nil,component=nil,_clicked=false,width=nil,height=nil,x=nil,y=nil,new=function(e)local e=e or{}setmetatable(e,Banner)e.component=display.newGroup()e.component.alpha=0
+local e=RevMobClient:new("fullscreens",e.placementID)e:fetch(n)end,hide=function(e)e.autoshow=false
+if e.fullscreen~=nil then e.fullscreen:hide()end
+end,show=function(e)e.autoshow=true
+if e.fullscreen~=nil then e.fullscreen:show()end
+end,close=function(e)e.autoshow=false
+if e.fullscreen~=nil then e.fullscreen:close()end
+end}FullscreenChooser.__index=FullscreenChooser
+end)package.preload['banner']=(function(...)require('revmob_messages')require('revmob_client')require('revmob_utils')local n="banner"Banner={autoshow=true,listener=nil,clickUrl=nil,imageUrl=nil,component=nil,_clicked=false,_released=false,width=nil,height=nil,x=nil,y=nil,new=function(e)local e=e or{}setmetatable(e,Banner)e.component=display.newGroup()e.component.alpha=0
 return e
-end,load=function(e,o)e.networkListener=function(t)local n,t=RevMobClient.theFetchSucceed(n,t,e.listener)if n then
-local n=t['banners'][1]['links']e.clickUrl=RevMobUtils.getLink('clicks',n)e.imageUrl=RevMobUtils.getLink('image',n)e:loadImage()end
+end,load=function(e,o)e.networkListener=function(t)local t,n=RevMobClient.theFetchSucceed(n,t,e.listener)if t then
+local n=n['banners'][1]['links']e.clickUrl=RevMobUtils.getLink('clicks',n)e.imageUrl=RevMobUtils.getLink('image',n)e:loadImage()end
 end
-local n=RevMobClient:new("banners",o)n:fetch(e.networkListener)end,loadImage=function(e)e._loadImageListener=function(t)if t.isError or t.target==nil or e.imageUrl==nil then
+local n=RevMobClient:new("banners",o)n:fetch(e.networkListener)end,loadImage=function(e)if e._released==true then log("Banner was released.")return end
+e._loadImageListener=function(t)if e._released==true then if t.target then t.target:removeSelf()end log("Banner was released.")return end
+if t.isError or t.target==nil or e.imageUrl==nil then
 log("Fail to load ad image: "..tostring(e.imageUrl))if e.listener~=nil then e.listener({type=REVMOB_EVENT_AD_NOT_RECEIVED,ad=n})end
 return
 end
 e.image=t.target
-local t=(RevMobScreen.width()>640)and 640 or RevMobScreen.width()local o=(RevMobDevice:isIPad()and 100 or 50*(RevMobScreen.bottom()-RevMobScreen.top())/display.contentHeight)local i=(RevMobScreen.left()+t/2)local r=(RevMobScreen.bottom()-o/2)e:setPosition(e.x or i,e.y or r)e:setDimension(e.width or t,e.height or o)e.image.tap=function(t)if not e._clicked then
+local o=(RevMobScreen.width()>640)and 640 or RevMobScreen.width()local t=(RevMobDevice:isIPad()and 100 or 50*(RevMobScreen.bottom()-RevMobScreen.top())/display.contentHeight)local i=(RevMobScreen.left()+o/2)local r=(RevMobScreen.bottom()-t/2)e:setPosition(e.x or i,e.y or r)e:setDimension(e.width or o,e.height or t)e.image.tap=function(t)if not e._clicked then
 e._clicked=true
 if e.listener~=nil then e.listener({type=REVMOB_EVENT_AD_CLICKED,ad=n})end
 local n=RevMobClient.getMarketURL(e.clickUrl)log(REVMOB_MSG_OPEN_MARKET)if n then system.openURL(n)end
@@ -572,9 +594,11 @@ if e.autoshow then
 e:show()end
 end
 display.loadRemoteImage(e.imageUrl,"GET",e._loadImageListener,"revmob_banner.jpg",system.TemporaryDirectory)end,isLoaded=function(e)return e.image~=nil and e.clickUrl~=nil and e.component~=nil
-end,hide=function(e)if e.component~=nil then e.component.alpha=0 end
+end,hide=function(e)if not e:isLoaded()then e.autoshow=false end
+if e.component~=nil then e.component.alpha=0 end
 end,show=function(e)if not e:isLoaded()then
-log("Ad is not loaded yet to be shown")return
+log("Ad is not loaded yet to be shown")e.autoshow=true
+return
 end
 if e.component~=nil then
 e.component.alpha=1
@@ -584,12 +608,14 @@ end,setPosition=function(e,t,n)if e.image~=nil then
 e.image.x=t or e.image.x
 e.image.y=n or e.image.y
 end
-end,setDimension=function(e,n,t,o)if e.image~=nil then
+end,setDimension=function(e,n,o,t)if e.image~=nil then
 e.image.width=n or e.image.width
-e.image.height=t or e.image.height
-e.image.rotation=o or e.image.rotation
+e.image.height=o or e.image.height
+e.image.rotation=t or e.image.rotation
 end
-end,release=function(e)e.networkListener=nil
+end,release=function(e)e._released=true
+e.autoshow=false
+e.networkListener=nil
 e._loadImageListener=nil
 e.listener=nil
 if e.image~=nil then
@@ -603,8 +629,8 @@ log(o)e.x=0
 e.y=0
 end
 return e
-end,load=function(e,o)e.networkListener=function(t)local o,t=RevMobClient.theFetchSucceed(n,t,e.listener)if o then
-local t=t['banners'][1]['links']e.clickUrl=RevMobUtils.getLink('clicks',t)e.htmlUrl=RevMobUtils.getLink('html',t)if e.listener~=nil then e.listener({type=REVMOB_EVENT_AD_RECEIVED,ad=n})end
+end,load=function(e,o)e.networkListener=function(t)local t,o=RevMobClient.theFetchSucceed(n,t,e.listener)if t then
+local t=o['banners'][1]['links']e.clickUrl=RevMobUtils.getLink('clicks',t)e.htmlUrl=RevMobUtils.getLink('html',t)if e.listener~=nil then e.listener({type=REVMOB_EVENT_AD_RECEIVED,ad=n})end
 e:configWebView()if e.autoshow then
 e:show()end
 end
@@ -632,21 +658,21 @@ if e.webView~=nil then
 timer.performWithDelay(1,function()if e.listener~=nil then e.listener({type=REVMOB_EVENT_AD_DISPLAYED,ad=n})end
 e.webView.alpha=1
 end)end
-end,setPosition=function(t,n,e)if t.webView then
-if n~=0 or e~=0 then
+end,setPosition=function(e,n,t)if e.webView then
+if n~=0 or t~=0 then
 log(o)end
 end
-end,setDimension=function(e,n,o,t)if e.webView then
-e.webView.width=n or e.webView.width
+end,setDimension=function(e,t,o,n)if e.webView then
+e.webView.width=t or e.webView.width
 e.webView.height=o or e.webView.height
-e.webView.rotation=t or e.webView.rotation
+e.webView.rotation=n or e.webView.rotation
 end
-end,update=function(e,r,o,t,n,i)e:setPosition(r,o)e:setDimension(t,n,i)end,release=function(e)if e.webView then
+end,update=function(e,o,i,r,n,t)e:setPosition(o,i)e:setDimension(r,n,t)end,release=function(e)if e.webView then
 e.webView:removeEventListener("tap",e.webView)e.webView:removeEventListener("touch",e.webView)e.webView:removeSelf()e.webView=nil
 end
 end,hide=function(e)if e.webView~=nil then e.webView.alpha=0 end
 end,}BannerWeb.__index=BannerWeb
-end)package.preload['adlink']=(function(...)require('revmob_messages')require('revmob_client')require('revmob_utils')require('session_manager')local t="link"AdLink={open=function(e,o)if RevMobSessionManager.isSessionStarted()then
+end)package.preload['adlink']=(function(...)require('revmob_messages')require('revmob_client')require('revmob_utils')require('session_manager')local t="link"AdLink={open=function(e,i)if RevMobSessionManager.isSessionStarted()then
 local n=function(n)local o,i=RevMobClient.theFetchSucceed(t,n,e)if o then
 if(n.statusCode==302 or n.statusCode==303)then
 local n=RevMobClient.getMarketURL(n.headers['location'])or n.headers['location']if n then
@@ -657,16 +683,16 @@ end
 end
 end
 end
-local e=RevMobClient:new("links",o)e.postWithoutFollowRedirect(e:url(),e:payloadAsJsonString(),n)else
+local e=RevMobClient:new("links",i)e.postWithoutFollowRedirect(e:url(),e:payloadAsJsonString(),n)else
 log(REVMOB_MSG_NO_SESSION)if e then e({type=REVMOB_EVENT_AD_NOT_RECEIVED,ad=t,reason=REVMOB_MSG_NO_SESSION})end
 end
-end,}end)package.preload['popup']=(function(...)require('revmob_messages')require('revmob_client')local n="popup"RevMobPopup={DELAYED_LOAD_IMAGE=10,YES_BUTTON_POSITION=2,message=nil,click_url=nil,adListener=nil,notifyAdListener=function(e)if RevMobPopup.adListener then
+end,}end)package.preload['popup']=(function(...)require('revmob_messages')require('revmob_client')local e="popup"RevMobPopup={DELAYED_LOAD_IMAGE=10,YES_BUTTON_POSITION=2,message=nil,click_url=nil,adListener=nil,notifyAdListener=function(e)if RevMobPopup.adListener then
 RevMobPopup.adListener(e)end
-end,show=function(e,n)RevMobPopup.adListener=e
-client=RevMobClient:new("pop_ups",n)client:fetch(RevMobPopup.networkListener)end,networkListener=function(e)local t,e=RevMobClient.theFetchSucceed(n,e,RevMobPopup.adListener)if t then
-if RevMobPopup.isParseOk(e)then
-RevMobPopup.message=e["pop_up"]["message"]RevMobPopup.click_url=e["pop_up"]["links"][1]["href"]timer.performWithDelay(RevMobPopup.DELAYED_LOAD_IMAGE,function()RevMobPopup.notifyAdListener({type=REVMOB_EVENT_AD_DISPLAYED,ad=n})local e=native.showAlert(RevMobPopup.message,"",{"No, thanks.","Yes, Sure!"},RevMobPopup.click)end)RevMobPopup.notifyAdListener({type=REVMOB_EVENT_AD_RECEIVED,ad=n})else
-log(REVMOB_MSG_UNKNOWN_REASON)RevMobPopup.notifyAdListener({type=REVMOB_EVENT_AD_NOT_RECEIVED,ad=n,reason=REVMOB_MSG_UNKNOWN_REASON})end
+end,show=function(n,e)RevMobPopup.adListener=n
+client=RevMobClient:new("pop_ups",e)client:fetch(RevMobPopup.networkListener)end,networkListener=function(n)local t,n=RevMobClient.theFetchSucceed(e,n,RevMobPopup.adListener)if t then
+if RevMobPopup.isParseOk(n)then
+RevMobPopup.message=n["pop_up"]["message"]RevMobPopup.click_url=n["pop_up"]["links"][1]["href"]timer.performWithDelay(RevMobPopup.DELAYED_LOAD_IMAGE,function()RevMobPopup.notifyAdListener({type=REVMOB_EVENT_AD_DISPLAYED,ad=e})local e=native.showAlert(RevMobPopup.message,"",{"No, thanks.","Yes, Sure!"},RevMobPopup.click)end)RevMobPopup.notifyAdListener({type=REVMOB_EVENT_AD_RECEIVED,ad=e})else
+log(REVMOB_MSG_UNKNOWN_REASON)RevMobPopup.notifyAdListener({type=REVMOB_EVENT_AD_NOT_RECEIVED,ad=e,reason=REVMOB_MSG_UNKNOWN_REASON})end
 end
 end,isParseOk=function(e)if(e==nil)then
 return false
@@ -682,13 +708,13 @@ elseif(e["pop_up"]["links"][1]["href"]==nil)then
 return false
 end
 return true
-end,click=function(e)if"clicked"==e.action then
-if RevMobPopup.YES_BUTTON_POSITION==e.index then
-RevMobPopup.notifyAdListener({type=REVMOB_EVENT_AD_CLICKED,ad=n})local e=RevMobClient.getMarketURL(RevMobPopup.click_url)log(REVMOB_MSG_OPEN_MARKET)if e then system.openURL(e)end
+end,click=function(n)if"clicked"==n.action then
+if RevMobPopup.YES_BUTTON_POSITION==n.index then
+RevMobPopup.notifyAdListener({type=REVMOB_EVENT_AD_CLICKED,ad=e})local e=RevMobClient.getMarketURL(RevMobPopup.click_url)log(REVMOB_MSG_OPEN_MARKET)if e then system.openURL(e)end
 else
-RevMobPopup.notifyAdListener({type=REVMOB_EVENT_AD_CLOSED,ad=n})end
+RevMobPopup.notifyAdListener({type=REVMOB_EVENT_AD_CLOSED,ad=e})end
 end
-end}end)package.preload['advertiser']=(function(...)local e=require('json')require('revmob_messages')require('revmob_client')require('revmob_utils')require('loadsave')Advertiser={registerInstall=function(n,e)local e=function(t)if(t.statusCode==200)then
+end}end)package.preload['advertiser']=(function(...)local e=require('json')require('revmob_messages')require('revmob_client')require('revmob_utils')require('loadsave')Advertiser={registerInstall=function(n,e)local t=function(t)if(t.statusCode==200)then
 RevMobPrefs.addItem(n,true)RevMobPrefs.saveToFile()log("Install received.")if e~=nil then
 e.notifyAdListener({type=REVMOB_EVENT_INSTALL_RECEIVED})end
 else
@@ -696,13 +722,13 @@ log("Install not received.")if e~=nil then
 e.notifyAdListener({type=REVMOB_EVENT_INSTALL_NOT_RECEIVED})end
 end
 end
-local t=RevMobPrefs.loadFromFile()if not t then
+local e=RevMobPrefs.loadFromFile()if not e then
 RevMobPrefs.saveToFile()RevMobPrefs.loadFromFile()end
-local n=RevMobPrefs.getItem(n)if n==true then
+local e=RevMobPrefs.getItem(n)if e==true then
 log("Install already registered in this device")else
-local n=RevMobClient:new("")n:install(e)end
+local e=RevMobClient:new("")e:install(t)end
 end}end)package.preload['loadsave']=(function(...)local n=require('json')RevMobPrefs={FILENAME="revmob_sdk.json",preferences={},getItem=function(e)return RevMobPrefs.preferences[e]or nil
-end,addItem=function(e,n)RevMobPrefs.preferences[e]=n
+end,addItem=function(n,e)RevMobPrefs.preferences[n]=e
 end,saveToFile=function()local e=RevMobPrefs.getFileAbsolutePath()local e=io.open(e,"w")local n=n.encode(RevMobPrefs.preferences)e:write(n)io.close(e)end,getFileAbsolutePath=function()local e=system.pathForFile(RevMobPrefs.FILENAME,system.CachesDirectory)if not e then
 e=system.pathForFile(RevMobPrefs.FILENAME,system.TemporaryDirectory)end
 return e
@@ -736,17 +762,20 @@ local e=n[system.getInfo("platformName")]if e==nil then
 e=n["iPhone OS"]end
 return e
 end,startSession=function(e,n)local e=RevMob.getRevMobIDAccordingToPlatform(e)RevMobSessionManager.startSession(e,n)Advertiser.registerInstall(e)end,showFullscreen=function(n,e)if not RevMobSessionManager.isSessionStarted()then return log(REVMOB_MSG_NO_SESSION)end
-local e=RevMob.getRevMobIDAccordingToPlatform(e)local e=FullscreenChooser.new({listener=n,placementID=e})e:show()end,testFullscreenImage=function(e,n)if not RevMobSessionManager.isSessionStarted()then return log(REVMOB_MSG_NO_SESSION)end
-local n=RevMob.getRevMobIDAccordingToPlatform(n)local e=Fullscreen.new({listener=e,placementID=n})e.imageUrl="http://s3.amazonaws.com/bcfads-static/creatives/en/fullscreen2.jpg"e.closeButtonUrl="http://s3.amazonaws.com/bcfads-static/creatives/fullscreen-closebutton1.png"e.clickUrl="http://www.revmob.com"e:loadImage()e:loadCloseButton()end,testFullscreenWeb=function(e,n)if not RevMobSessionManager.isSessionStarted()then return log(REVMOB_MSG_NO_SESSION)end
-local n=RevMob.getRevMobIDAccordingToPlatform(n)local e=FullscreenWeb.new({listener=e,placementID=n})e.htmlUrl="http://s3.amazonaws.com/bcfads-static/creatives/en/fullscreen1.html"e.clickUrl="http://www.revmob.com"e:show()end,openAdLink=function(e,n)if not RevMobSessionManager.isSessionStarted()then return log(REVMOB_MSG_NO_SESSION)end
-local n=RevMob.getRevMobIDAccordingToPlatform(n)AdLink.open(e,n)end,createBanner=function(e,n)if not RevMobSessionManager.isSessionStarted()then return log(REVMOB_MSG_NO_SESSION)end
+local e=RevMob.getRevMobIDAccordingToPlatform(e)local e=FullscreenChooser.new({listener=n,placementID=e})e:load()return e
+end,testFullscreenImage=function(n,e)if not RevMobSessionManager.isSessionStarted()then return log(REVMOB_MSG_NO_SESSION)end
+local e=RevMob.getRevMobIDAccordingToPlatform(e)local e=Fullscreen.new({listener=n,placementID=e})e.imageUrl="http://s3.amazonaws.com/bcfads-static/creatives/en/fullscreen2.jpg"e.closeButtonUrl="http://s3.amazonaws.com/bcfads-static/creatives/fullscreen-closebutton1.png"e.clickUrl="http://www.revmob.com"e:loadImage()e:loadCloseButton()return e
+end,testFullscreenWeb=function(e,n)if not RevMobSessionManager.isSessionStarted()then return log(REVMOB_MSG_NO_SESSION)end
+local n=RevMob.getRevMobIDAccordingToPlatform(n)local e=FullscreenWeb.new({listener=e,placementID=n})e.htmlUrl="http://s3.amazonaws.com/bcfads-static/creatives/en/fullscreen1.html"e.clickUrl="http://www.revmob.com"e:show()return e
+end,openAdLink=function(n,e)if not RevMobSessionManager.isSessionStarted()then return log(REVMOB_MSG_NO_SESSION)end
+local e=RevMob.getRevMobIDAccordingToPlatform(e)AdLink.open(n,e)end,createBanner=function(e,n)if not RevMobSessionManager.isSessionStarted()then return log(REVMOB_MSG_NO_SESSION)end
 if e==nil then e={}end
 local n=RevMob.getRevMobIDAccordingToPlatform(n)e["placementID"]=n
 local e=Banner.new(e)e:load()return e
 end,createBannerWeb=function(e,n)if not RevMobSessionManager.isSessionStarted()then return log(REVMOB_MSG_NO_SESSION)end
 if e==nil then e={}end
 local e=BannerWeb.new(e)local n=RevMob.getRevMobIDAccordingToPlatform(n)e:load(n)return e
-end,showPopup=function(e,n)if not RevMobSessionManager.isSessionStarted()then return log(REVMOB_MSG_NO_SESSION)end
-local n=RevMob.getRevMobIDAccordingToPlatform(n)RevMobPopup.show(e,n)end,printEnvironmentInformation=function(e)log("==============================================")log("RevMob Corona SDK: "..REVMOB_SDK["NAME"].." - "..REVMOB_SDK["VERSION"])log("App ID in session: "..tostring(RevMobSessionManager.appID))if e then
+end,showPopup=function(n,e)if not RevMobSessionManager.isSessionStarted()then return log(REVMOB_MSG_NO_SESSION)end
+local e=RevMob.getRevMobIDAccordingToPlatform(e)RevMobPopup.show(n,e)end,printEnvironmentInformation=function(e)log("==============================================")log("RevMob Corona SDK: "..REVMOB_SDK["NAME"].." - "..REVMOB_SDK["VERSION"])log("App ID in session: "..tostring(RevMobSessionManager.appID))if e then
 log("User App ID for Android: "..tostring(e["Android"]))log("User App ID for iOS: "..tostring(e["iPhone OS"]))end
 log("Device name: "..system.getInfo("name"))log("Model name: "..system.getInfo("model"))log("Device ID: "..system.getInfo("deviceID"))log("Environment: "..system.getInfo("environment"))log("Platform name: "..system.getInfo("platformName"))log("Platform version: "..system.getInfo("platformVersion"))log("Corona version: "..system.getInfo("version"))log("Corona build: "..system.getInfo("build"))log("Architecture: "..system.getInfo("architectureInfo"))log("Locale-Country: "..system.getPreference("locale","country"))log("Locale-Language: "..system.getPreference("locale","language"))end}

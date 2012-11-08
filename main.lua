@@ -30,6 +30,7 @@ end
 local bannerRevMob = nil
 local bannerHidden = nil
 local fullscreenRevMob = nil
+local fullscreenHidden = nil
 
 -- table to setup tabBar buttons
 local line1 = {
@@ -143,7 +144,8 @@ local line3 = {
     label="Fullscreen", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
     onPress = function(event)
       timer.performWithDelay(100, function()
-        RevMob.showFullscreen(revmobListener, PLACEMENT_IDS)
+        fullscreenRevMob = RevMob.showFullscreen(revmobListener, PLACEMENT_IDS)
+        fullscreenHidden = false
       end)
       return true
     end
@@ -155,17 +157,26 @@ local line3 = {
       timer.performWithDelay(100, function()
         fullscreenRevMob = Fullscreen.new({listener = revmobListener, autoshow = false})
         fullscreenRevMob:load()
+        fullscreenHidden = true
       end)
       return true
     end
   },
 
   {
-    label="Show", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+    label="Hide/Show", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
     onPress = function(event)
       timer.performWithDelay(100, function()
         if fullscreenRevMob then
-          fullscreenRevMob:show()
+          if fullscreenHidden then
+            print("Show activated")
+            fullscreenRevMob:show()
+            fullscreenHidden = false
+          else
+            print("Hide activated")
+            fullscreenRevMob:hide()
+            fullscreenHidden = true
+          end
         end
       end)
       return true
@@ -176,7 +187,7 @@ local line3 = {
     label="Web", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
     onPress = function(event)
       timer.performWithDelay(100, function()
-        RevMob.testFullscreenWeb(revmobListener, PLACEMENT_IDS)
+        fullscreenRevMob = RevMob.testFullscreenWeb(revmobListener, PLACEMENT_IDS)
       end)
       return true
     end
@@ -186,7 +197,7 @@ local line3 = {
     label="Image", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
     onPress = function(event)
       timer.performWithDelay(100, function()
-        RevMob.testFullscreenImage(revmobListener, PLACEMENT_IDS)
+        fullscreenRevMob = RevMob.testFullscreenImage(revmobListener, PLACEMENT_IDS)
       end)
       return true
     end
