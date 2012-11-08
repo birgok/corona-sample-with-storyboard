@@ -27,6 +27,10 @@ revmobListener = function (event)
   for k,v in pairs(event) do print(tostring(k) .. ': ' .. tostring(v)) end
 end
 
+local bannerRevMob = nil
+local bannerHidden = nil
+local fullscreenRevMob = nil
+
 -- table to setup tabBar buttons
 local line1 = {
 	{
@@ -36,7 +40,7 @@ local line1 = {
         return true
 	  end
 	},
-	
+
 	{
 	  label = "Test Success", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
@@ -44,7 +48,7 @@ local line1 = {
         return true
 	  end
 	},
-	
+
 	{
 	  label = "Test Fail", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
@@ -52,7 +56,7 @@ local line1 = {
         return true
 	  end
 	},
-	
+
 	{
 	  label = "Placement", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
@@ -60,7 +64,7 @@ local line1 = {
         return true
 	  end
 	},
-	
+
 }
 
 local line2 = {
@@ -73,28 +77,55 @@ local line2 = {
             y = display.contentHeight - 20,
             width = 300,
             height = 40,
-            adListener = revmobListener
+            listener = revmobListener
           }
           bannerRevMob = RevMob.createBanner(params, PLACEMENT_IDS)
+          bannerHidden = false
         end)
         return true
       end
 	},
-	
-	{
-      label="Hide Banner", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+
+  {
+      label="Load", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+      onPress = function(event)
+        timer.performWithDelay(100, function()
+          local params = {
+            x = display.contentWidth / 2,
+            y = display.contentHeight - 20,
+            width = 300,
+            height = 40,
+            listener = revmobListener,
+            autoshow = false
+          }
+          bannerRevMob = Banner.new(params)
+          bannerRevMob:load()
+          bannerHidden = true
+        end)
+        return true
+      end
+  },
+
+  {
+      label="Hide/Show", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
       onPress = function(event)
         timer.performWithDelay(100, function()
           if bannerRevMob then
-            bannerRevMob:hide()
+            if bannerHidden then
+              bannerRevMob:show()
+              bannerHidden = false
+            else
+              bannerRevMob:hide()
+              bannerHidden = true
+            end
           end
         end)
         return true
       end
-	},
-	
+  },
+
 	{
-      label="Release Banner", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+      label="Release", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
       onPress = function(event)
         timer.performWithDelay(100, function()
           if bannerRevMob then
@@ -108,34 +139,57 @@ local line2 = {
 }
 
 local line3 = {
-    {
-      label="Random Fullscreen", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
-      onPress = function(event)
-        timer.performWithDelay(100, function()
-          RevMob.showFullscreen(revmobListener, PLACEMENT_IDS)
-        end)
-        return true
-      end
+  {
+    label="Fullscreen", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+    onPress = function(event)
+      timer.performWithDelay(100, function()
+        RevMob.showFullscreen(revmobListener, PLACEMENT_IDS)
+      end)
+      return true
+    end
+  },
+
+  {
+    label="Load", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+    onPress = function(event)
+      timer.performWithDelay(100, function()
+        fullscreenRevMob = Fullscreen.new({listener = revmobListener, autoshow = false})
+        fullscreenRevMob:load()
+      end)
+      return true
+    end
+  },
+
+  {
+    label="Show", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+    onPress = function(event)
+      timer.performWithDelay(100, function()
+        if fullscreenRevMob then
+          fullscreenRevMob:show()
+        end
+      end)
+      return true
+    end
+  },
+
+  {
+    label="Web", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+    onPress = function(event)
+      timer.performWithDelay(100, function()
+        RevMob.testFullscreenWeb(revmobListener, PLACEMENT_IDS)
+      end)
+      return true
+    end
 	},
-	
-    {
-      label="Fullscreen Web", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
-      onPress = function(event)
-        timer.performWithDelay(100, function()
-          RevMob.showFullscreenWeb({}, PLACEMENT_IDS)
-        end)
-        return true
-      end
-	},
-	
-    {
-      label="Fullscreen Image", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
-      onPress = function(event)
-        timer.performWithDelay(100, function()
-          RevMob.showFullscreenImage(revmobListener, PLACEMENT_IDS)
-        end)
-        return true
-      end
+
+  {
+    label="Image", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+    onPress = function(event)
+      timer.performWithDelay(100, function()
+        RevMob.testFullscreenImage(revmobListener, PLACEMENT_IDS)
+      end)
+      return true
+    end
 	},
 
 }
@@ -148,7 +202,7 @@ local line4 = {
       return true
 	  end
 	},
-	
+
 	{
 	  label = "Link", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
