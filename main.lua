@@ -183,26 +183,6 @@ local line3 = {
     end
   },
 
-  {
-    label="Web", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
-    onPress = function(event)
-      timer.performWithDelay(100, function()
-        fullscreenRevMob = RevMob.testFullscreenWeb(revmobListener, PLACEMENT_IDS)
-      end)
-      return true
-    end
-	},
-
-  {
-    label="Image", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
-    onPress = function(event)
-      timer.performWithDelay(100, function()
-        fullscreenRevMob = RevMob.testFullscreenImage(revmobListener, PLACEMENT_IDS)
-      end)
-      return true
-    end
-	},
-
 }
 
 local line4 = {
