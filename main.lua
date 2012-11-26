@@ -45,18 +45,26 @@ local line1 = {
 	{
 	  label = "Test Success", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
-        RevMob.startSession(REVMOB_IDS, RevMob.TEST_WITH_ADS)
+        RevMob.setTestingMode(RevMob.TEST_WITH_ADS)
         return true
 	  end
 	},
 
-	{
-	  label = "Test Fail", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
-	  onPress = function(event)
-        RevMob.startSession(REVMOB_IDS, RevMob.TEST_WITHOUT_ADS)
+  {
+    label = "Test Fail", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+    onPress = function(event)
+        RevMob.setTestingMode(RevMob.TEST_WITHOUT_ADS)
         return true
-	  end
-	},
+    end
+  },
+
+  {
+    label = "Disable Test", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+    onPress = function(event)
+        RevMob.setTestingMode(RevMob.TEST_DISABLED)
+        return true
+    end
+  },
 
 	{
 	  label = "Placement", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
@@ -119,6 +127,19 @@ local line2 = {
               bannerRevMob:hide()
               bannerHidden = true
             end
+          end
+        end)
+        return true
+      end
+  },
+
+  {
+      label="Change", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
+      onPress = function(event)
+        timer.performWithDelay(100, function()
+          if bannerRevMob then
+              bannerRevMob:setPosition(bannerRevMob.x + 1, bannerRevMob.y + 1)
+              bannerRevMob:setDimension(bannerRevMob.width - 1, bannerRevMob.height - 1)
           end
         end)
         return true
