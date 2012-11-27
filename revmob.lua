@@ -316,7 +316,7 @@ end
 function i.__index:start(e)local e=n.create(e)schedule(e,n.resume(e))end
 function l.coroutine()local e={}local e={stamp=e,sending={name="sending",set=a(),cortn={},stamp=e},receiving={name="receiving",set=a(),cortn={},stamp=e},}function e.tcp()return s(e,r.tcp())end
 return t.setmetatable(e,i)end
-end)package.preload['revmob_messages']=(function(...)REVMOB_MSG_NO_ADS="No ads for this device/country right now, or your App ID is paused."REVMOB_MSG_APP_IDLING="No ads because your App ID or Placement ID is idling."REVMOB_MSG_NO_SESSION="The method RevMob.startSession(REVMOB_IDS) has not been called."REVMOB_MSG_UNKNOWN_REASON="Ad was not received for an unknown reason: "REVMOB_MSG_INVALID_DEVICE_ID="Device requirements not met."REVMOB_MSG_INVALID_APPID="App not recognized due to invalid App ID."REVMOB_MSG_INVALID_PLACEMENTID="No ads because you type an invalid Placement ID."REVMOB_MSG_OPEN_MARKET="Opening market"REVMOB_EVENT_AD_RECEIVED="adReceived"REVMOB_EVENT_AD_NOT_RECEIVED="adNotReceived"REVMOB_EVENT_AD_DISPLAYED="adDisplayed"REVMOB_EVENT_AD_CLICKED="adClicked"REVMOB_EVENT_AD_CLOSED="adClosed"REVMOB_EVENT_INSTALL_RECEIVED="installReceived"REVMOB_EVENT_INSTALL_NOT_RECEIVED="installNotReceived"end)package.preload['revmob_about']=(function(...)REVMOB_SDK={VERSION="3.5.0",DEBUG=false}local e=function()if"Android"==system.getInfo("platformName")then
+end)package.preload['revmob_messages']=(function(...)REVMOB_MSG_NO_ADS="No ads for this device/country right now, or your App ID is paused."REVMOB_MSG_APP_IDLING="No ads because your App ID or Placement ID is idling."REVMOB_MSG_NO_SESSION="The method RevMob.startSession(REVMOB_IDS) has not been called."REVMOB_MSG_UNKNOWN_REASON="Ad was not received for an unknown reason: "REVMOB_MSG_UNKNOWN_REASON_CORONA="Ad was not received for an unknown reason. Is your internet connection working properly? Please, try again later. If this error persist, please contact us for more details."REVMOB_MSG_INVALID_DEVICE_ID="Device requirements not met."REVMOB_MSG_INVALID_APPID="App not recognized due to invalid App ID."REVMOB_MSG_INVALID_PLACEMENTID="No ads because you type an invalid Placement ID."REVMOB_MSG_OPEN_MARKET="Opening market"REVMOB_EVENT_AD_RECEIVED="adReceived"REVMOB_EVENT_AD_NOT_RECEIVED="adNotReceived"REVMOB_EVENT_AD_DISPLAYED="adDisplayed"REVMOB_EVENT_AD_CLICKED="adClicked"REVMOB_EVENT_AD_CLOSED="adClosed"REVMOB_EVENT_INSTALL_RECEIVED="installReceived"REVMOB_EVENT_INSTALL_NOT_RECEIVED="installNotReceived"end)package.preload['revmob_about']=(function(...)REVMOB_SDK={VERSION="3.5.0",DEBUG=false}local e=function()if"Android"==system.getInfo("platformName")then
 return"corona-android"elseif"iPhone OS"==system.getInfo("platformName")then
 return"corona-ios"else
 return"corona"end
@@ -392,7 +392,10 @@ elseif e==423 then
 n=REVMOB_MSG_APP_IDLING
 elseif e==500 then
 n=REVMOB_MSG_UNKNOWN_REASON.."Please, contact us for more details."end
-log("Reason: "..tostring(n).." ("..tostring(e)..")")if i~=nil then i({type=REVMOB_EVENT_AD_NOT_RECEIVED,ad=r,reason=n})end
+if n==nil then
+log(REVMOB_MSG_UNKNOWN_REASON_CORONA)else
+log("Reason: "..tostring(n).." ("..tostring(e)..")")end
+if i~=nil then i({type=REVMOB_EVENT_AD_NOT_RECEIVED,ad=r,reason=n})end
 return false,nil
 end
 if e==302 or e==303 then

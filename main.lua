@@ -225,16 +225,16 @@ local line4 = {
 }
 
 local line5 = {
-	{
-	  label = "Print env", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
-	  onPress = function(event)
+  {
+    label = "Print env", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+    onPress = function(event)
         RevMob.printEnvironmentInformation(REVMOB_IDS)
         RevMob.printEnvironmentInformation()
         return true
-	  end
-	},
+    end
+  },
 	{
-	  label = "Change Scene (Test)", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+	  label = "Change Scene", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
         RevMob.startSession(REVMOB_IDS)
         storyboard.gotoScene("scene2", "fade", 400)
@@ -246,13 +246,20 @@ local line5 = {
 	  end
 	},
 	{
-	  label = "Purge current scene", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+	  label = "Purge scene", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
 	  onPress = function(event)
         storyboard.purgeScene(storyboard.getCurrentSceneName())
         storyboard.removeScene(storyboard.getCurrentSceneName())
         return true
 	  end
-	}
+	},
+  {
+    label = "Close", up = "icon1.png", down = "icon1-down.png", width = 32, height = 32,
+    onPress = function(event)
+        os.exit()
+        return true
+    end
+  }
 }
 
 widget.newTabBar{ top = 0, buttons = line1 }
