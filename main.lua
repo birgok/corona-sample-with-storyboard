@@ -20,7 +20,7 @@ local widget = require "widget"
 storyboard.gotoScene( "scene1" )
 
 -- Display objects added below will not respond to storyboard transitions
-require 'revmob'
+local RevMob = require('revmob')
 
 revmobListener = function (event)
   print("Event: " .. event.type)
@@ -107,7 +107,7 @@ local line2 = {
             listener = revmobListener,
             autoshow = false
           }
-          bannerRevMob = Banner.new(params)
+          bannerRevMob = RevMobBanner.new(params)
           bannerRevMob:load()
           bannerHidden = true
         end)
@@ -176,7 +176,7 @@ local line3 = {
     label="Load", up="icon1.png", down="icon1-down.png", width = 32, height = 32,
     onPress = function(event)
       timer.performWithDelay(100, function()
-        fullscreenRevMob = Fullscreen.new({listener = revmobListener, autoshow = false})
+        fullscreenRevMob = RevMobFullscreen.new({listener = revmobListener, autoshow = false})
         fullscreenRevMob:load()
         fullscreenHidden = true
       end)
