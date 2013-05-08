@@ -200,7 +200,7 @@ return"corona-ios"else
 return"corona"end
 end
 e.NAME=n()return e end)package.preload['revmob_log']=(function(...)local e
-e={NONE=0,RELEASE=1,INFO=2,DEBUG=3,level=3,setLevel=function(n)assert(type(n)=="number","level expects a number")assert(n>=e.NONE and n<=e.INFO)e.level=n
+e={NONE=0,RELEASE=1,INFO=2,DEBUG=3,level=2,setLevel=function(n)assert(type(n)=="number","level expects a number")assert(n>=e.NONE and n<=e.INFO)e.level=n
 end,release=function(n)if e.level>=e.RELEASE then
 print("[RevMob] "..tostring(n))io.output():flush()end
 end,info=function(n)if e.level>=e.INFO then
