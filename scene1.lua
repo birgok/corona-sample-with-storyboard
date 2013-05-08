@@ -28,7 +28,7 @@ end
 function scene:createScene( event )
 	local screenGroup = self.view
 
-	image = display.newImage( "bg.jpg" )
+	image = display.newImage( "assets/bg.jpg" )
 	screenGroup:insert( image )
 
 	image.touch = onSceneTouch
