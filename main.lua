@@ -37,9 +37,35 @@ local function newButton(label, callback)
   return { label = label, defaultFile = "assets/icon1.png", overFile = "assets/icon1-down.png", width = 32, height = 32, onPress = onPress }
 end
 
+local function locationHandler(event)
+  -- Check for error (user may have turned off Location Services)
+  if event.errorCode then
+    print( "Location error: " .. tostring( event.errorMessage ) )
+  else
+    RevMob.setUserLocationLatitude(event.latitude)
+    RevMob.setUserLocationLongitude(event.longitude)
+    RevMob.setUserLocationAccuracy(event.accuracy)
+  end
+
+  Runtime:removeEventListener( "location", locationHandler )
+end
+
 -- table to setup tabBar buttons
 local line1 = {
-  newButton("Session", function() RevMob.startSession(REVMOB_IDS) end),
+  newButton("Session", 
+    function() 
+      RevMob.startSession(REVMOB_IDS) 
+
+      RevMob.setUserGender("male")
+      RevMob.setUserAgeRangeMin(18)
+      RevMob.setUserAgeRangeMax(25)
+      RevMob.setUserBirthday("1995/01/01")
+      RevMob.setUserPage("http://twitter.com/revmob")
+      local interests = {"corona", "apps", "mobile"}
+      RevMob.setUserInterests(interests)
+
+      Runtime:addEventListener( "location", locationHandler )
+    end),
   newButton("Test Success", function() RevMob.setTestingMode(RevMob.TEST_WITH_ADS) end),
   newButton("Test Fail", function() RevMob.setTestingMode(RevMob.TEST_WITHOUT_ADS) end),
   newButton("Disable Test", function() RevMob.setTestingMode(RevMob.TEST_DISABLED) end),

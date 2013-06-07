@@ -19,10 +19,12 @@ settings = {
 		}
 	},
 	
-	--[[ For Android:
-	
 	androidPermissions = {
   		"android.permission.INTERNET",
+  		"android.permission.ACCESS_WIFI_STATE",
+  		-- Optional permissions, add them only if you will send the user's geo location
+  		"android.permission.ACCESS_FINE_LOCATION",
+  		"android.permission.ACCESS_COARSE_LOCATION",
   	},
-	]]--
+
 }
